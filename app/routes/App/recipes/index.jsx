@@ -17,7 +17,7 @@ const RecipeIndex = () => {
       <SearchAndFilter />
       <RecipeFeed itemNum={25} />
       <Fab
-        sx={{ position: "fixed", bottom: "7rem", right: "2rem" }}
+        sx={{ position: "fixed", bottom: "7rem", right: ".25rem" }}
         size="large"
         variant="extended"
         color="secondary"
