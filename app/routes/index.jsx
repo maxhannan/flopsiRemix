@@ -9,5 +9,5 @@ export default function Index() {
   const location = useLocation();
 
   console.log(location);
-  return <h1>Hello from index</h1>;
+  return <h1>Hello from </h1>;
 }
