@@ -7,11 +7,13 @@ import Typography from "@mui/material/Typography";
 
 import Button from "@mui/material/Button";
 //import PopMenu from "./PopMenu";
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdLogout } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
 import AddRecipeContext from "../../Context/RecipeAdderCtx";
+import { Form } from "@remix-run/react";
+import { Box } from "@mui/system";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -39,43 +41,52 @@ const NavBar = () => {
         >
           Max Hannan
         </Typography>
-        <div>
-          {location === "/app/recipes" && (
-            <Button
-              variant="outlined"
-              elevation="0"
-              startIcon={<MdAdd />}
-              onClick={handleClickOpen}
-              color="secondary"
-            >
-              Add
-            </Button>
-          )}
+        <Box sx={{ dsiplay: "flex" }}>
+          <Form action="/auth/logout" method="post">
+            {location === "/app/recipes" && (
+              <IconButton
+                variant="outlined"
+                size="large"
+                color="secondary"
+                onClick={handleClickOpen}
+              >
+                <MdAdd />
+              </IconButton>
+            )}
 
-          <IconButton
-            variant="outlined"
-            size="large"
-            color="secondary"
-            onClick={handleMenu}
-            sx={{ ml: "1rem" }}
-          >
-            <GiCook />
-          </IconButton>
-          <PopMenu
-            anchorEl={anchorEl}
-            handleClose={handleClose}
-            items={[
-              {
-                name: "View Profile",
-                cb: () => navigate("/app/profile"),
-              },
-              {
-                name: "Logout",
-                cb: () => console.log("logout"),
-              },
-            ]}
-          />
-        </div>
+            <IconButton
+              variant="outlined"
+              size="large"
+              color="secondary"
+              onClick={handleMenu}
+            >
+              <GiCook />
+            </IconButton>
+            <PopMenu
+              anchorEl={anchorEl}
+              handleClose={handleClose}
+              items={[
+                {
+                  name: "View Profile",
+                  cb: () => navigate("/app/profile"),
+                },
+                {
+                  name: "Logout",
+                  cb: () => console.log("logout"),
+                },
+              ]}
+            />
+
+            <IconButton
+              variant="outlined"
+              size="large"
+              color="secondary"
+              type="submit"
+            >
+              <MdLogout />
+            </IconButton>
+          </Form>
+        </Box>
       </Toolbar>
     </AppBar>
   );

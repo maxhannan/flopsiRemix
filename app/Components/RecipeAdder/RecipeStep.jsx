@@ -2,19 +2,20 @@ import {
   Card,
   CardActions,
   CardContent,
+  Divider,
   IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 
-import { MdDelete, MdEdit, MdSave } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
-const RecipeStep = ({ stepNum, id, handleDelete }) => {
+const RecipeStep = ({ step, handleDelete, handleChange }) => {
   return (
-    <Card variant="outlined">
+    <Card elevation={0}>
       <CardContent sx={{ mb: "0", pb: "0" }}>
         <Typography gutterBottom variant="h6" color="secondary" component="div">
-          Step {stepNum}
+          Step {step.orderNum}
         </Typography>
         <TextField
           variant="outlined"
@@ -22,11 +23,13 @@ const RecipeStep = ({ stepNum, id, handleDelete }) => {
           name="step"
           fullWidth
           multiline
+          value={step.content}
+          onChange={(e) => handleChange(e, step.id)}
         />
       </CardContent>
       <CardActions>
         <IconButton
-          onClick={() => handleDelete(id)}
+          onClick={() => handleDelete(step.id)}
           variant="outlined"
           size="medium"
           color="secondary"

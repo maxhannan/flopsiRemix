@@ -1,6 +1,7 @@
 import {
   Autocomplete,
   Button,
+  Divider,
   Icon,
   IconButton,
   TextField,
@@ -41,16 +42,6 @@ const IngredientAdder = ({ id, handleDelete, ingredient }) => {
         </IconButton>
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          sx={{ flex: "3", mr: ".5em" }}
-          options={top100Films}
-          onChange={(e) => console.log(e)}
-          renderInput={(params) => (
-            <TextField {...params} label="Link to recipe..." />
-          )}
-        />
         <TextField
           sx={{ flex: "1", mr: ".5em" }}
           label="Qty"
@@ -62,7 +53,7 @@ const IngredientAdder = ({ id, handleDelete, ingredient }) => {
           }
         />
         <TextField
-          sx={{ flex: "1" }}
+          sx={{ flex: "1", mr: ".5em" }}
           label="Unit"
           name="unit"
           required
@@ -71,7 +62,18 @@ const IngredientAdder = ({ id, handleDelete, ingredient }) => {
             setUpdatedIngredient({ ...updatedIngredient, unit: e.target.value })
           }
         />
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          sx={{ flex: "2" }}
+          options={top100Films}
+          onChange={(e) => console.log(e)}
+          renderInput={(params) => (
+            <TextField {...params} label="Link to recipe..." />
+          )}
+        />
       </Box>
+      <Divider />
     </Stack>
   );
 };

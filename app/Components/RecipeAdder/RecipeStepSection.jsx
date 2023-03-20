@@ -24,6 +24,15 @@ const RecipeStepSection = () => {
     });
     setSteps(newNumSteps);
   };
+  const handleChange = (e, id) => {
+    const newSteps = steps.map((s) => {
+      if (s.id === id) {
+        return { ...s, content: e.target.value };
+      }
+      return s;
+    });
+    setSteps(newSteps);
+  };
   return (
     <>
       <Stack spacing={1}>
@@ -49,9 +58,9 @@ const RecipeStepSection = () => {
         {steps.map((s) => (
           <RecipeStep
             key={s.orderNum}
-            stepNum={s.orderNum}
-            id={s.id}
+            step={s}
             handleDelete={handleDelete}
+            handleChange={handleChange}
           />
         ))}
       </Stack>

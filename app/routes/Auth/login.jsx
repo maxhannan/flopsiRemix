@@ -3,7 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,8 +11,42 @@ import Container from "@mui/material/Container";
 import { MdLock } from "react-icons/md";
 
 import { Button } from "@mui/material";
+import { json, redirect } from "@remix-run/node";
+import { validateName, validatePassword } from "../../utils/validators.server";
+import { getUser, login } from "../../utils/auth.server";
+import { Form, Link } from "@remix-run/react";
 
-const login = () => {
+export const loader = async ({ request }) => {
+  // If there's already a user in the session, redirect to the home page
+  return (await getUser(request)) ? redirect("/") : null;
+};
+
+export const action = async ({ request }) => {
+  const form = await request.formData();
+
+  const username = form.get("username");
+  const password = form.get("password");
+
+  if (typeof username !== "string" || typeof password !== "string") {
+    return json({ error: `Invalid Form Data` }, { status: 400 });
+  }
+  const errors = {
+    email: validateName(username),
+    password: validatePassword(password),
+  };
+  if (Object.values(errors).some(Boolean))
+    return json(
+      {
+        errors,
+        fields: { username, password },
+        form: action,
+      },
+      { status: 400 }
+    );
+  return await login({ username, password });
+};
+
+const loginComponent = () => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -29,12 +63,7 @@ const login = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box
-          component="form"
-          onSubmit={() => console.log("submit")}
-          noValidate
-          sx={{ mt: 1 }}
-        >
+        <Form method="post">
           <TextField
             margin="normal"
             color="secondary"
@@ -72,26 +101,26 @@ const login = () => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link to="/auth/register">
-                <Typography color="primary" variant="body2">
-                  Forgot password?
-                </Typography>
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/auth/register">
-                <Typography color="primary" variant="body2">
-                  Don't have an account? Sign Up
-                </Typography>
-              </Link>
-            </Grid>
+        </Form>
+        <Grid container>
+          <Grid item xs>
+            <Link to="/auth/register">
+              <Typography color="primary" variant="body2">
+                Forgot password?
+              </Typography>
+            </Link>
           </Grid>
-        </Box>
+          <Grid item>
+            <Link to="/auth/register">
+              <Typography color="primary" variant="body2">
+                Don't have an account? Sign Up
+              </Typography>
+            </Link>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
 };
 
-export default login;
+export default loginComponent;
