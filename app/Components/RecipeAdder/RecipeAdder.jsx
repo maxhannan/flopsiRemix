@@ -1,52 +1,66 @@
 import {
-  Autocomplete,
-  Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  Divider,
   FormControlLabel,
-  IconButton,
   MenuItem,
   Select,
   Switch,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
-import { useState } from "react";
-import { MdAdd } from "react-icons/md";
-import { v4 } from "uuid";
+import { Form, useNavigation } from "@remix-run/react";
+import { useContext, useEffect, useState } from "react";
+import AddRecipeContext from "../../Context/RecipeAdderCtx";
 
 import IngredientSection from "./IngredientSection";
 
-import RecipeStep from "./RecipeStep";
 import RecipeStepSection from "./RecipeStepSection";
 
 const RecipeAdder = () => {
+  const navigation = useNavigation();
+  const { handleCloseDialog } = useContext(AddRecipeContext);
+  const [selectValue, setSelectValue] = useState("All Recipes");
+  useEffect(() => {
+    if (navigation.state === "submitting") {
+      handleCloseDialog();
+    }
+  }, [navigation]);
   return (
     <Container sx={{ my: "2rem" }} disableGutters>
-      <Stack spacing={2}>
-        <FormControlLabel
-          control={<Switch color="secondary" defaultChecked />}
-          label="Is Component"
-        />
-        <TextField label="Recipe Name" fullWidth />
-        <Select color="secondary" value={10} labelId="select" id="select">
-          <MenuItem value={10}>All Recipes</MenuItem>
-          <MenuItem value={20}>Breads/Crackers/Wraps</MenuItem>
-          <MenuItem value={30}>Spreads</MenuItem>
-          <MenuItem value={40}>Raw & Cured</MenuItem>
-          <MenuItem value={50}>Land & Sea</MenuItem>
-          <MenuItem value={60}>Vegetables</MenuItem>
-          <MenuItem value={70}>Spice Mix</MenuItem>
-          <MenuItem value={80}>Dairy</MenuItem>
-          <MenuItem value={90}>Pasta Dough</MenuItem>
-        </Select>
-        <IngredientSection />
-        <RecipeStepSection />
-      </Stack>
+      <Form action="/app/submitrecipe" method="post">
+        <Stack spacing={2}>
+          <TextField label="Recipe Name" name="recipeName" required fullWidth />
+          <Select
+            color="secondary"
+            value={selectValue}
+            onChange={(e) => setSelectValue(e.target.value)}
+            labelId="category"
+            id="category"
+            name="category"
+          >
+            <MenuItem value={"All Recipes"}>All Recipes</MenuItem>
+            <MenuItem value={"Breads/Crackers/Wraps"}>
+              Breads/Crackers/Wraps
+            </MenuItem>
+            <MenuItem value={"Spreads"}>Spreads</MenuItem>
+            <MenuItem value={"Raw & Cured"}>Raw & Cured</MenuItem>
+            <MenuItem value={"Land & Sea"}>Land & Sea</MenuItem>
+            <MenuItem value={"Vegetables"}>Vegetables</MenuItem>
+            <MenuItem value={"Spice Mix"}>Spice Mix</MenuItem>
+            <MenuItem value={"Dairy"}>Dairy</MenuItem>
+            <MenuItem value={"Pasta Dough"}>Pasta Dough</MenuItem>
+          </Select>
+          <IngredientSection />
+          <RecipeStepSection />
+          <Button
+            type="submit"
+            variant="contained"
+            disableElevation
+            color="secondary"
+          >
+            Save
+          </Button>
+        </Stack>
+      </Form>
     </Container>
   );
 };

@@ -3,11 +3,19 @@ import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 import { MdAdd } from "react-icons/md";
 import IngredientAdder from "./IngredinetAdder";
-import IngredientSummary from "./IngredientSummary";
 import { v4 } from "uuid";
-import IngredientTable from "./IngredientTable";
+
 const IngredientsSection = () => {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState([
+    {
+      name: "",
+      linkedRecipe: null,
+      qty: "",
+      unit: "",
+      orderNum: "",
+      id: v4(),
+    },
+  ]);
   const addIngredient = () => {
     const newIngredient = {
       name: "",
@@ -15,36 +23,15 @@ const IngredientsSection = () => {
       qty: "",
       unit: "",
       orderNum: "",
-      saved: false,
+
       id: v4(),
     };
     setIngredients([...ingredients, newIngredient]);
     console.log(ingredients);
   };
-  const handleSave = (ingredient) => {
-    const newIngredients = ingredients.map((i) => {
-      if (i.id === ingredient.id) {
-        return ingredient;
-      }
-      return i;
-    });
-
-    setIngredients(newIngredients);
-    handleToggle(ingredient.id, newIngredients);
-  };
 
   const handleDelete = (id) => {
     const newIngredients = ingredients.filter((i) => i.id !== id);
-    setIngredients(newIngredients);
-  };
-
-  const handleToggle = (id, ingredientList) => {
-    const newIngredients = ingredientList.map((i) => {
-      if (i.id === id) {
-        i.saved = !i.saved;
-      }
-      return i;
-    });
     setIngredients(newIngredients);
   };
 
@@ -70,25 +57,16 @@ const IngredientsSection = () => {
         <Divider />
       </Stack>
       <Stack spacing={2}>
-        {console.log(ingredients)}
-
         {ingredients.map((i) => {
-          if (!i.saved) {
-            return (
-              <IngredientAdder
-                key={i.id}
-                id={i.id}
-                ingredient={i}
-                handleDelete={handleDelete}
-                handleToggle={handleToggle}
-                handleSave={handleSave}
-              />
-            );
-          }
+          return (
+            <IngredientAdder
+              key={i.id}
+              id={i.id}
+              ingredient={i}
+              handleDelete={handleDelete}
+            />
+          );
         })}
-        {ingredients.length > 0 && (
-          <IngredientTable rows={ingredients} handleToggle={handleToggle} />
-        )}
       </Stack>
     </>
   );

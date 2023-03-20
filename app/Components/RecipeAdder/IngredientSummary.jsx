@@ -1,11 +1,6 @@
 import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { MdEdit } from "react-icons/md";
 
-import { Avatar, Card, CardActionArea, CardHeader } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
-import { purple } from "@mui/material/colors";
-import { MdOutlineChevronRight } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 const IngredientSummary = ({ ingredient, id, handleToggle, ingredients }) => {
   return (
     <Stack>

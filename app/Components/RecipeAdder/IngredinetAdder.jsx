@@ -7,16 +7,10 @@ import {
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useState } from "react";
-import { MdClose, MdDelete } from "react-icons/md";
-import { v4 } from "uuid";
+import { MdDelete } from "react-icons/md";
+
 import top100Films from "./FAKELIST";
-const IngredientAdder = ({
-  id,
-  handleDelete,
-  handleToggle,
-  handleSave,
-  ingredient,
-}) => {
+const IngredientAdder = ({ id, handleDelete, ingredient }) => {
   const [updatedIngredient, setUpdatedIngredient] = useState(ingredient);
 
   return (
@@ -27,6 +21,8 @@ const IngredientAdder = ({
           sx={{ flex: "3", mr: ".5em" }}
           label="Ingredient Name"
           value={updatedIngredient.name}
+          name="ingredient"
+          required
           onChange={(e) =>
             setUpdatedIngredient({
               ...updatedIngredient,
@@ -50,6 +46,7 @@ const IngredientAdder = ({
           id="combo-box-demo"
           sx={{ flex: "3", mr: ".5em" }}
           options={top100Films}
+          onChange={(e) => console.log(e)}
           renderInput={(params) => (
             <TextField {...params} label="Link to recipe..." />
           )}
@@ -57,6 +54,8 @@ const IngredientAdder = ({
         <TextField
           sx={{ flex: "1", mr: ".5em" }}
           label="Qty"
+          name="qty"
+          required
           value={updatedIngredient.qty}
           onChange={(e) =>
             setUpdatedIngredient({ ...updatedIngredient, qty: e.target.value })
@@ -65,21 +64,14 @@ const IngredientAdder = ({
         <TextField
           sx={{ flex: "1" }}
           label="Unit"
+          name="unit"
+          required
           value={updatedIngredient.unit}
           onChange={(e) =>
             setUpdatedIngredient({ ...updatedIngredient, unit: e.target.value })
           }
         />
       </Box>
-      <Button
-        color="secondary"
-        variant="outlined"
-        onClick={() => {
-          handleSave(updatedIngredient);
-        }}
-      >
-        Save
-      </Button>
     </Stack>
   );
 };
