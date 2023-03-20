@@ -11,12 +11,13 @@ import { MdAdd } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
+import AddRecipeContext from "../../Context/RecipeAdderCtx";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const { handleClickOpen } = useContext(AddRecipeContext);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -44,7 +45,7 @@ const NavBar = () => {
               variant="outlined"
               elevation="0"
               startIcon={<MdAdd />}
-              onClick={() => console.log(open)}
+              onClick={handleClickOpen}
               color="secondary"
             >
               Add

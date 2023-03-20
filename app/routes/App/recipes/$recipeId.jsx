@@ -3,17 +3,12 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import { MdClose, MdOutlineEditNote } from "react-icons/md";
 import { TbScaleOutline } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import IngredientTable from "../../../Components/RecipesSections/Components/IngredientTable";
 
-export async function recipeLoader({ params }) {
-  const recipe = params.recipeId;
-  return recipe;
-}
-
-const Recipe = ({ params }) => {
+const Recipe = () => {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
