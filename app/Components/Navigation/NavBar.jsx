@@ -43,17 +43,6 @@ const NavBar = () => {
         </Typography>
         <Box sx={{ dsiplay: "flex" }}>
           <Form action="/auth/logout" method="post">
-            {location === "/app/recipes" && (
-              <IconButton
-                variant="outlined"
-                size="large"
-                color="secondary"
-                onClick={handleClickOpen}
-              >
-                <MdAdd />
-              </IconButton>
-            )}
-
             <IconButton
               variant="outlined"
               size="large"
