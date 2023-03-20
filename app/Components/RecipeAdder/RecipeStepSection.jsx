@@ -54,7 +54,7 @@ const RecipeStepSection = () => {
         </Box>
         <Divider />
       </Stack>
-      <Stack spacing={1}>
+      <Stack spacing={2}>
         {steps.map((s) => (
           <RecipeStep
             key={s.orderNum}

@@ -27,7 +27,11 @@ export default function App() {
     <html lang="en">
       <head>
         <Meta />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
         <Links />
+
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -49,6 +53,7 @@ export function CatchBoundary() {
       <head>
         <title>Oops!</title>
         <Meta />
+
         <Links />
       </head>
       <body>

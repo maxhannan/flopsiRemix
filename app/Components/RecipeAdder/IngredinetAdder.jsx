@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useState } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdClose, MdDelete } from "react-icons/md";
 
 import top100Films from "./FAKELIST";
 const IngredientAdder = ({ id, handleDelete, ingredient }) => {
@@ -34,11 +34,11 @@ const IngredientAdder = ({ id, handleDelete, ingredient }) => {
 
         <IconButton
           onClick={() => handleDelete(id)}
-          sx={{ width: "50px" }}
           variant="outlined"
+          size="small"
           color="secondary"
         >
-          <MdDelete />
+          <MdClose size={"1.25rem"} />
         </IconButton>
       </Box>
       <Box sx={{ display: "flex" }}>
