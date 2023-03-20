@@ -19,14 +19,10 @@ const RecipeIndex = () => {
       <Fab
         sx={{ position: "fixed", bottom: "7rem", right: ".25rem" }}
         size="large"
-        variant="extended"
         color="secondary"
         onClick={handleClickOpen}
       >
-        <MdAdd size="1.5rem" />
-        <Typography variant="subtitle2" sx={{ ml: ".5rem" }}>
-          Add recipe
-        </Typography>
+        <MdAdd size="2rem" />
       </Fab>
       <FullScreenDialog
         title={"Add Recipe"}
