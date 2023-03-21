@@ -1,7 +1,7 @@
 import {
+  Chip,
   CircularProgress,
   Container,
-  Divider,
   Grid,
   IconButton,
   Stack,
@@ -9,18 +9,17 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useLoaderData } from "@remix-run/react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdClose, MdOutlineEditNote } from "react-icons/md";
-import { TbScaleOutline } from "react-icons/tb";
 import { Form, useNavigate, useNavigation } from "react-router-dom";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import ScaleFormDialog from "../../../Components/Menus/ScaleDialog";
-import FormDialog from "../../../Components/Menus/ScaleDialog";
+
 import NewIngredientTable from "../../../Components/RecipeAdder/IngredientTable";
-import IngredientTable from "../../../Components/RecipeAdder/IngredientTable";
 import RecipeForm from "../../../Components/RecipeAdder/RecipeForm";
 import RecipeInstructions from "../../../Components/RecipeInstructions";
+import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 
 import { getRecipeById } from "../../../utils/recipes.server";
 
@@ -34,12 +33,18 @@ export const loader = async ({ params }) => {
 const Recipe = () => {
   const navigate = useNavigate();
   const recipe = useLoaderData();
-
+  const navigation = useNavigation();
+  const action = `/app/editrecipe/${recipe.id}`;
   const [open, setOpen] = useState(false);
-
   const [scale, setScale] = useState(1);
 
-  const navigation = useNavigation();
+  useEffect(() => {
+    if (navigation.state === "submitting") {
+      console.log("INSIDE");
+      setOpen(!open);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
 
   if (navigation.state === "loading" || !recipe) {
     return <CircularProgress />;
@@ -91,6 +96,17 @@ const Recipe = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12} md={12}>
           <NewIngredientTable rows={recipe.ingredients} scale={scale} />
+          <Box>
+            {recipe.allergens[0] &&
+              recipe.allergens.map((a) => (
+                <Chip
+                  sx={{ mr: ".25rem", mt: "1rem" }}
+                  color="error"
+                  key={a}
+                  label={a}
+                />
+              ))}
+          </Box>
         </Grid>
         <RecipeInstructions instructions={recipe.steps} />
       </Grid>
@@ -102,7 +118,7 @@ const Recipe = () => {
         handleClose={handleClose}
       >
         <Container sx={{ my: "2rem" }} disableGutters>
-          <Form method="post">
+          <Form action={action} method="post">
             <RecipeForm recipe={recipe} />
           </Form>
         </Container>

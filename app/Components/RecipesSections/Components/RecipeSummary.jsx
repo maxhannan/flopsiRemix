@@ -1,5 +1,4 @@
 import { Avatar, Card, CardActionArea, CardHeader } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
 import { purple } from "@mui/material/colors";
 import { MdOutlineChevronRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";

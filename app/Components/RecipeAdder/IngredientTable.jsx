@@ -1,14 +1,10 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Checkbox, IconButton, TableHead } from "@mui/material";
-import { MdEdit } from "react-icons/md";
-
-import { purple } from "@mui/material/colors";
+import { Checkbox, TableHead } from "@mui/material";
 
 export default function NewIngredientTable({ rows, scale }) {
   console.log(rows);

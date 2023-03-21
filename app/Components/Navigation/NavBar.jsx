@@ -1,17 +1,13 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-
-import Button from "@mui/material/Button";
-//import PopMenu from "./PopMenu";
-import { MdAdd, MdLogout } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
-import AddRecipeContext from "../../Context/RecipeAdderCtx";
+
 import { Form, useLoaderData } from "@remix-run/react";
 import { Box } from "@mui/system";
 
@@ -21,7 +17,6 @@ const NavBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useLoaderData();
 
-  const { handleClickOpen } = useContext(AddRecipeContext);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };

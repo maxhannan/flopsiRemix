@@ -50,3 +50,15 @@ export const getRecipeById = async (recipeId) => {
 
   return recipe;
 };
+
+export const updateRecipe = async (recipe, recipeId) => {
+  const updatedRecipe = await prisma.recipe.update({
+    where: {
+      id: recipeId,
+    },
+    data: {
+      ...recipe,
+    },
+  });
+  return updatedRecipe;
+};

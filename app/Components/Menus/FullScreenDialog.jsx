@@ -1,5 +1,3 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,8 +7,9 @@ import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 import { MdClose } from "react-icons/md";
 import { Container } from "@mui/system";
+import { forwardRef } from "react";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 

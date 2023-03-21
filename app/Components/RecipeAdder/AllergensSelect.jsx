@@ -42,9 +42,12 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function AllergensSelect() {
+export default function AllergensSelect({ allergenList }) {
+  console.log(allergenList);
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [personName, setPersonName] = React.useState(
+    allergenList[0] ? allergenList : []
+  );
 
   const handleChange = (event) => {
     const {
@@ -72,7 +75,7 @@ export default function AllergensSelect() {
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <Chip color="error" key={value} label={value} />
               ))}
             </Box>
           )}

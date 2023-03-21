@@ -1,14 +1,8 @@
-import {
-  CircularProgress,
-  Container,
-  Fab,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { CircularProgress, Fab } from "@mui/material";
 import { useLoaderData } from "@remix-run/react";
 import { useContext } from "react";
 import { MdAdd } from "react-icons/md";
-import { useActionData, useNavigation } from "react-router";
+import { useNavigation } from "react-router";
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import RecipeAdder from "../../../Components/RecipeAdder/RecipeAdder";
 import SearchAndFilter from "../../../Components/RecipesSections/Components/SearchAndFilter";

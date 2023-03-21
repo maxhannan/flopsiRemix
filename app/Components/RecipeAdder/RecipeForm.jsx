@@ -52,9 +52,10 @@ const RecipeForm = ({ recipe }) => {
       </Select>
       <Box sx={{ display: "flex" }}>
         <TextField
-          sx={{ flex: "2", mr: "1rem" }}
+          sx={{ flex: "1", mr: "1rem" }}
           label="Yield Quantity"
           name="yieldQty"
+          type="number"
           defaultValue={recipeValues.yield.yieldQty}
           required
           fullWidth
@@ -68,7 +69,7 @@ const RecipeForm = ({ recipe }) => {
           fullWidth
         />
       </Box>
-      <AllergensSelect />
+      <AllergensSelect allergenList={recipeValues.allergens} />
       <IngredientSection ingredientsList={recipeValues.ingredients} />
       <RecipeStepSection stepsList={recipeValues.steps} />
       <Button
@@ -77,7 +78,7 @@ const RecipeForm = ({ recipe }) => {
         disableElevation
         color="secondary"
       >
-        Save
+        {recipe ? "Update" : "Save"}
       </Button>
     </Stack>
   );

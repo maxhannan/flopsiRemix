@@ -2,8 +2,8 @@ import { Button, Divider, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 import { MdAdd } from "react-icons/md";
-import IngredientAdder from "./IngredinetAdder";
 import { v4 } from "uuid";
+import IngredientAdder from "./IngredinetAdder";
 
 const IngredientsSection = ({ ingredientsList }) => {
   const [ingredients, setIngredients] = useState(
@@ -39,17 +39,6 @@ const IngredientsSection = ({ ingredientsList }) => {
           <Typography sx={{ flex: "1" }} variant="h5">
             Ingredients
           </Typography>
-          <Box>
-            <Button
-              variant="outlined"
-              disableElevation
-              startIcon={<MdAdd />}
-              color="secondary"
-              onClick={addIngredient}
-            >
-              Add
-            </Button>
-          </Box>
         </Box>
         <Divider />
       </Stack>
@@ -57,13 +46,22 @@ const IngredientsSection = ({ ingredientsList }) => {
         {ingredients.map((i) => {
           return (
             <IngredientAdder
-              key={i.ingredient}
+              key={v4()}
               id={i.id}
               ingredientObj={i}
               handleDelete={handleDelete}
             />
           );
         })}
+        <Box>
+          <Button
+            startIcon={<MdAdd />}
+            color="secondary"
+            onClick={addIngredient}
+          >
+            Add Ingredient
+          </Button>
+        </Box>
       </Stack>
     </>
   );

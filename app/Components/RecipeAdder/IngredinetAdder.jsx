@@ -1,14 +1,7 @@
-import {
-  Autocomplete,
-  Button,
-  Divider,
-  Icon,
-  IconButton,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Divider, IconButton, TextField } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useState } from "react";
-import { MdClose, MdDelete } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 
 import top100Films from "./FAKELIST";
 const IngredientAdder = ({ id, handleDelete, ingredientObj }) => {
@@ -46,6 +39,7 @@ const IngredientAdder = ({ id, handleDelete, ingredientObj }) => {
           sx={{ flex: "1", mr: ".5em" }}
           label="Qty"
           name="qty"
+          type="number"
           required
           value={updatedIngredient.qty}
           onChange={(e) =>

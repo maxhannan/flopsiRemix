@@ -1,15 +1,7 @@
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Divider,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Card, IconButton, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { MdClose, MdDelete } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 
 const RecipeStep = ({ step, handleDelete, handleChange }) => {
   return (

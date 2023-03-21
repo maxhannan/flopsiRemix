@@ -1,4 +1,11 @@
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { MdAdd } from "react-icons/md";
 import { v4 } from "uuid";
@@ -44,17 +51,6 @@ const RecipeStepSection = ({ stepsList }) => {
           <Typography sx={{ flex: "1" }} variant="h5">
             Steps
           </Typography>
-          <Box>
-            <Button
-              variant="outlined"
-              disableElevation
-              startIcon={<MdAdd />}
-              color="secondary"
-              onClick={handleAddStep}
-            >
-              Add
-            </Button>
-          </Box>
         </Box>
         <Divider />
       </Stack>
@@ -67,6 +63,15 @@ const RecipeStepSection = ({ stepsList }) => {
             handleChange={handleChange}
           />
         ))}
+        <Box>
+          <Button
+            startIcon={<MdAdd />}
+            color="secondary"
+            onClick={handleAddStep}
+          >
+            Add Step
+          </Button>
+        </Box>
       </Stack>
     </>
   );

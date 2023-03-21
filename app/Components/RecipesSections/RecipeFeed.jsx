@@ -1,7 +1,4 @@
 import { Stack } from "@mui/system";
-
-import { v4 as uuidv4 } from "uuid";
-
 import RecipeSummary from "./Components/RecipeSummary";
 
 const RecipeFeed = ({ recipes }) => {
