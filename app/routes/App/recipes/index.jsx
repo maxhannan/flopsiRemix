@@ -53,7 +53,7 @@ const RecipeIndex = () => {
         handleClickOpen={handleClickOpen}
         handleClose={handleCloseDialog}
       >
-        <RecipeAdder />
+        <RecipeAdder recipeList={recipes} />
       </FullScreenDialog>
     </>
   );

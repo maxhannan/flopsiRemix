@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import AddRecipeContext from "../../Context/RecipeAdderCtx";
 import RecipeForm from "./RecipeForm";
 
-const RecipeAdder = () => {
+const RecipeAdder = ({ recipeList }) => {
   const navigation = useNavigation();
   const { handleCloseDialog } = useContext(AddRecipeContext);
 
@@ -18,7 +18,7 @@ const RecipeAdder = () => {
   return (
     <Container sx={{ my: "2rem" }} disableGutters>
       <Form action="/app/submitrecipe" method="post">
-        <RecipeForm />
+        <RecipeForm recipeList={recipeList} />
       </Form>
     </Container>
   );

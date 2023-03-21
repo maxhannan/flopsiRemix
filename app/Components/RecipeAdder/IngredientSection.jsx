@@ -21,6 +21,7 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
   );
   const addIngredient = () => {
     const newIngredient = {
+      id: v4(),
       ingredient: "",
       linkedRecipe: null,
       qty: "",
@@ -32,6 +33,16 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
 
   const handleDelete = (id) => {
     const newIngredients = ingredients.filter((i) => i.id !== id);
+    setIngredients(newIngredients);
+  };
+
+  const handleChange = (id, field, newValue) => {
+    const newIngredients = ingredients.map((i) => {
+      if (i.id === id) {
+        return { ...i, [field]: newValue };
+      }
+      return i;
+    });
     setIngredients(newIngredients);
   };
 
@@ -52,6 +63,7 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
               recipeList={recipeList}
               key={v4()}
               id={i.id}
+              handleChange={handleChange}
               ingredientObj={i}
               handleDelete={handleDelete}
             />
