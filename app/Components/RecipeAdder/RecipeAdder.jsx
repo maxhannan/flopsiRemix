@@ -1,15 +1,9 @@
-import {
-  Button,
-  FormControlLabel,
-  MenuItem,
-  Select,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import { Form, useNavigation } from "@remix-run/react";
 import { useContext, useEffect, useState } from "react";
 import AddRecipeContext from "../../Context/RecipeAdderCtx";
+import AllergensSelect from "./AllergensSelect";
 
 import IngredientSection from "./IngredientSection";
 
@@ -23,7 +17,9 @@ const RecipeAdder = () => {
     if (navigation.state === "submitting") {
       handleCloseDialog();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
+
   return (
     <Container sx={{ my: "2rem" }} disableGutters>
       <Form action="/app/submitrecipe" method="post">
@@ -49,6 +45,23 @@ const RecipeAdder = () => {
             <MenuItem value={"Dairy"}>Dairy</MenuItem>
             <MenuItem value={"Pasta Dough"}>Pasta Dough</MenuItem>
           </Select>
+          <Box sx={{ display: "flex" }}>
+            <TextField
+              sx={{ flex: "2", mr: "1rem" }}
+              label="Yield Quantity"
+              name="yieldQty"
+              required
+              fullWidth
+            />
+            <TextField
+              label="Yield Unit"
+              sx={{ flex: "1" }}
+              name="yieldUnit"
+              required
+              fullWidth
+            />
+          </Box>
+          <AllergensSelect />
           <IngredientSection />
           <RecipeStepSection />
           <Button

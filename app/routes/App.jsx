@@ -3,11 +3,13 @@ import { Outlet } from "@remix-run/react";
 import BottomNav from "../Components/Navigation/BottomNav";
 import NavBar from "../Components/Navigation/NavBar";
 import { AddRecipeContextProvider } from "../Context/RecipeAdderCtx";
-import { requireUserId } from "../utils/auth.server";
+import { getUser, requireUserId } from "../utils/auth.server";
 
 export const loader = async ({ request }) => {
   await requireUserId(request);
-  return null;
+  const user = await getUser(request);
+  console.log(user);
+  return user;
 };
 const App = () => {
   return (

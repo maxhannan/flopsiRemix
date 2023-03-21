@@ -12,13 +12,15 @@ import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
 import AddRecipeContext from "../../Context/RecipeAdderCtx";
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { Box } from "@mui/system";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const location = useLocation().pathname;
+
   const [anchorEl, setAnchorEl] = useState(null);
+  const user = useLoaderData();
+
   const { handleClickOpen } = useContext(AddRecipeContext);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,7 +41,7 @@ const NavBar = () => {
           color="secondary"
           sx={{ flexGrow: 1 }}
         >
-          Max Hannan
+          {user.username}
         </Typography>
         <Box sx={{ dsiplay: "flex" }}>
           <Form action="/auth/logout" method="post">

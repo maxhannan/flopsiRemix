@@ -44,7 +44,8 @@ export const action = async ({ request }) => {
     firstName: validateName(firstName || ""),
     lastName: validateName(lastName || ""),
   };
-  if (Object.values(errors).some(Boolean))
+  if (Object.values(errors).some(Boolean)) {
+    console.log(errors);
     return json(
       {
         errors,
@@ -53,7 +54,7 @@ export const action = async ({ request }) => {
       },
       { status: 400 }
     );
-
+  }
   return await register({ email, password, username, firstName, lastName });
 };
 

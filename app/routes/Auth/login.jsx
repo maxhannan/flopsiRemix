@@ -10,11 +10,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { MdLock } from "react-icons/md";
 
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { json, redirect } from "@remix-run/node";
 import { validateName, validatePassword } from "../../utils/validators.server";
 import { getUser, login } from "../../utils/auth.server";
-import { Form, Link } from "@remix-run/react";
+import { Form, Link, useNavigation } from "@remix-run/react";
 
 export const loader = async ({ request }) => {
   // If there's already a user in the session, redirect to the home page
@@ -46,7 +46,12 @@ export const action = async ({ request }) => {
   return await login({ username, password });
 };
 
-const loginComponent = () => {
+const LoginComponent = () => {
+  const navigation = useNavigation();
+  console.log(navigation);
+  if (navigation.state === "loading") {
+    return <CircularProgress />;
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -99,7 +104,7 @@ const loginComponent = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            {navigation.state === "submitting" ? "Signing in..." : "Sign In"}
           </Button>
         </Form>
         <Grid container>
@@ -123,4 +128,4 @@ const loginComponent = () => {
   );
 };
 
-export default loginComponent;
+export default LoginComponent;

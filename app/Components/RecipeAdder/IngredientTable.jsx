@@ -5,12 +5,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { IconButton } from "@mui/material";
+import { Checkbox, IconButton, TableHead } from "@mui/material";
 import { MdEdit } from "react-icons/md";
 
 import { purple } from "@mui/material/colors";
 
-export default function IngredientTable({ rows, handleToggle }) {
+export default function NewIngredientTable({ rows }) {
   console.log(rows);
   if (rows) {
     return (
@@ -20,44 +20,45 @@ export default function IngredientTable({ rows, handleToggle }) {
         sx={{ maxHeight: "65vh" }}
       >
         <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell padding="checkbox">
+                <Checkbox />
+              </TableCell>
+              <TableCell>Ingredient</TableCell>
+              <TableCell align="right">Quantity</TableCell>
+              <TableCell align="right">Unit</TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             {rows.map((row) => {
-              if (row.name.length > 0 && row.saved) {
-                return (
-                  <TableRow
-                    key={row.name}
+              return (
+                <TableRow
+                  key={row.ingredient}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                >
+                  <TableCell padding="checkbox" component="th" scope="row">
+                    <Checkbox />
+                  </TableCell>
+                  <TableCell
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      fontSize: "1rem",
                     }}
+                    component="th"
+                    scope="row"
                   >
-                    <TableCell padding="checkbox" component="th" scope="row">
-                      <IconButton
-                        size="small"
-                        onClick={() => handleToggle(row.id, rows)}
-                      >
-                        <MdEdit />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        fontSize: "1rem",
-                        color: `${purple[500]}`,
-                        fontWeight: "bold",
-                      }}
-                      component="th"
-                      scope="row"
-                    >
-                      {row.name}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: "1rem" }} align="right">
-                      {row.qty}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: "1rem" }} align="right">
-                      {row.unit}
-                    </TableCell>
-                  </TableRow>
-                );
-              }
+                    {row.ingredient}
+                  </TableCell>
+                  <TableCell sx={{ fontSize: "1rem" }} align="right">
+                    {row.qty}
+                  </TableCell>
+                  <TableCell sx={{ fontSize: "1rem" }} align="right">
+                    {row.unit}
+                  </TableCell>
+                </TableRow>
+              );
             })}
           </TableBody>
         </Table>

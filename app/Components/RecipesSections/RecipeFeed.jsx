@@ -1,13 +1,14 @@
 import { Stack } from "@mui/system";
 
 import { v4 as uuidv4 } from "uuid";
+
 import RecipeSummary from "./Components/RecipeSummary";
 
-const RecipeFeed = ({ itemNum }) => {
+const RecipeFeed = ({ recipes }) => {
   return (
     <Stack sx={{ mt: 2 }} spacing={1}>
-      {Array.from(Array(itemNum)).map((a) => (
-        <RecipeSummary key={uuidv4()} />
+      {recipes.map((r) => (
+        <RecipeSummary key={r.id} recipe={r} />
       ))}
     </Stack>
   );

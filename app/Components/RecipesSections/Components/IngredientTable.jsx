@@ -2,12 +2,12 @@ import { useMediaQuery } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
 
-export default function IngredientTable() {
+export default function IngredientTable({ ingredients }) {
   const matches = useMediaQuery("(min-width:650px)");
 
   const columns = [
     {
-      field: "name",
+      field: "ingredient",
       headerName: "Ingredient",
       width: !matches ? "180" : "255",
     },
@@ -15,19 +15,9 @@ export default function IngredientTable() {
     { field: "unit", headerName: "Unit", width: !matches ? "30" : "75" },
   ];
 
-  const rows = [
-    {
-      id: uuidv4(),
-      name: "Parsely, Chopped",
-      qty: 1000,
-      unit: "gr",
-    },
-    { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
-    { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
-    { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
-    { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
-    { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
-  ];
+  const rows = ingredients.map((i) => {
+    return { ...i, id: uuidv4() };
+  });
 
   const autoH = rows.length > 8 ? false : true;
   return (

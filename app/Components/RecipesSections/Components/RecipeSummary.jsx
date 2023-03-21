@@ -4,11 +4,11 @@ import { purple } from "@mui/material/colors";
 import { MdOutlineChevronRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-const RecipeSummary = () => {
+const RecipeSummary = ({ recipe }) => {
   const navigate = useNavigate();
   return (
     <Card variant="outlined">
-      <CardActionArea onClick={() => navigate(`/app/recipes/${uuidv4()}`)}>
+      <CardActionArea onClick={() => navigate(`/app/recipes/${recipe.id}`)}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: purple[400] }} aria-label="recipe">
@@ -16,8 +16,8 @@ const RecipeSummary = () => {
             </Avatar>
           }
           action={<MdOutlineChevronRight />}
-          title="Saffron Mayo"
-          subheader="Sauces"
+          title={recipe.name}
+          subheader={recipe.category}
         />
       </CardActionArea>
     </Card>

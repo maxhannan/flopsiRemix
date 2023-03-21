@@ -1,22 +1,40 @@
-import { Fab, Typography, useMediaQuery } from "@mui/material";
+import {
+  CircularProgress,
+  Container,
+  Fab,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useLoaderData } from "@remix-run/react";
 import { useContext } from "react";
 import { MdAdd } from "react-icons/md";
-import { useActionData } from "react-router";
+import { useActionData, useNavigation } from "react-router";
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import RecipeAdder from "../../../Components/RecipeAdder/RecipeAdder";
 import SearchAndFilter from "../../../Components/RecipesSections/Components/SearchAndFilter";
 import RecipeFeed from "../../../Components/RecipesSections/RecipeFeed";
 import AddRecipeContext from "../../../Context/RecipeAdderCtx";
+import { getRecipes } from "../../../utils/recipes.server";
 
+export const loader = async () => {
+  const recipes = await getRecipes();
+  console.log(recipes);
+  return recipes;
+};
 const RecipeIndex = () => {
   const { open, handleClickOpen, handleCloseDialog } =
     useContext(AddRecipeContext);
   const matches = useMediaQuery("(max-width:650px)");
+  const recipes = useLoaderData();
+  const navigation = useNavigation();
 
+  if (navigation.state === "loading") {
+    return <CircularProgress />;
+  }
   return (
     <>
       <SearchAndFilter />
-      <RecipeFeed itemNum={25} />
+      {recipes && <RecipeFeed recipes={recipes} />}
 
       <Fab
         sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}

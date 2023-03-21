@@ -19,9 +19,37 @@ model User {
   password  String
   chef      Boolean  @default(false)
   profile   Profile  
+  recipes   Recipe[] @relation("AuthoredRecipes")
 }
 
 type Profile {
   firstName String
   lastName  String
+}
+
+model Recipe {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  category  String
+  allergens String[]
+  yield     Yield
+  ingredients Ingredient[]
+  steps     String[]
+  author    User      @relation(fields: [authorId], references: [id], "AuthoredRecipes")
+  authorId  String    @db.ObjectId
+
+}
+
+type Yield {
+  yieldQty  String
+  yieldUnit String
+}
+
+type Ingredient {
+  ingredient  String
+  qty         String
+  unit        String
+
 }
