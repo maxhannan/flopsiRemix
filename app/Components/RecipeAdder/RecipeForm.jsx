@@ -57,6 +57,7 @@ const RecipeForm = ({ recipe }) => {
           name="yieldQty"
           type="number"
           defaultValue={recipeValues.yield.yieldQty}
+          inputProps={{ inputMode: "numeric" }}
           required
           fullWidth
         />
