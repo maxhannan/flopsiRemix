@@ -17,18 +17,35 @@ export const getRecipes = async () => {
         id: true,
         name: true,
         category: true,
+        author: {
+          select: {
+            id: true,
+            username: true,
+            chef: true,
+            profile: true,
+          },
+        },
       },
     });
     return recipes;
   } catch (error) {
     return null;
   }
-  return null;
 };
 
 export const getRecipeById = async (recipeId) => {
   const recipe = await prisma.recipe.findUnique({
     where: { id: recipeId },
+    include: {
+      author: {
+        select: {
+          id: true,
+          username: true,
+          chef: true,
+          profile: true,
+        },
+      },
+    },
   });
 
   return recipe;

@@ -4,8 +4,12 @@ import { MdAdd } from "react-icons/md";
 import { v4 } from "uuid";
 import RecipeStep from "./RecipeStep";
 
-const RecipeStepSection = () => {
-  const [steps, setSteps] = useState([{ orderNum: 1, content: "", id: v4() }]);
+const RecipeStepSection = ({ stepsList }) => {
+  const [steps, setSteps] = useState(
+    stepsList.map((s) => {
+      return { content: s, orderNum: stepsList.indexOf(s) + 1, id: v4() };
+    }) || [{ orderNum: 1, content: "", id: v4() }]
+  );
 
   const handleAddStep = () => {
     const stepNum = steps.length > 0 ? steps.slice(-1)[0].orderNum + 1 : 1;

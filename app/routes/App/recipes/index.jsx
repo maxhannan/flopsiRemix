@@ -24,7 +24,7 @@ export const loader = async () => {
 const RecipeIndex = () => {
   const { open, handleClickOpen, handleCloseDialog } =
     useContext(AddRecipeContext);
-  const matches = useMediaQuery("(max-width:650px)");
+
   const recipes = useLoaderData();
   const navigation = useNavigation();
 

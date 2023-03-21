@@ -5,26 +5,23 @@ import { MdAdd } from "react-icons/md";
 import IngredientAdder from "./IngredinetAdder";
 import { v4 } from "uuid";
 
-const IngredientsSection = () => {
-  const [ingredients, setIngredients] = useState([
-    {
-      name: "",
-      linkedRecipe: null,
-      qty: "",
-      unit: "",
-      orderNum: "",
-      id: v4(),
-    },
-  ]);
+const IngredientsSection = ({ ingredientsList }) => {
+  const [ingredients, setIngredients] = useState(
+    ingredientsList || [
+      {
+        ingredient: "",
+        linkedRecipe: null,
+        qty: "",
+        unit: "",
+      },
+    ]
+  );
   const addIngredient = () => {
     const newIngredient = {
-      name: "",
+      ingredient: "",
       linkedRecipe: null,
       qty: "",
       unit: "",
-      orderNum: "",
-
-      id: v4(),
     };
     setIngredients([...ingredients, newIngredient]);
     console.log(ingredients);
@@ -60,9 +57,9 @@ const IngredientsSection = () => {
         {ingredients.map((i) => {
           return (
             <IngredientAdder
-              key={i.id}
+              key={i.ingredient}
               id={i.id}
-              ingredient={i}
+              ingredientObj={i}
               handleDelete={handleDelete}
             />
           );

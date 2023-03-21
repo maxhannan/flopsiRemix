@@ -12,7 +12,8 @@ const RecipeSummary = ({ recipe }) => {
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: purple[400] }} aria-label="recipe">
-              RF
+              {recipe.author.profile.firstName[0].toLowerCase() +
+                recipe.author.profile.lastName[0].toLowerCase()}
             </Avatar>
           }
           action={<MdOutlineChevronRight />}

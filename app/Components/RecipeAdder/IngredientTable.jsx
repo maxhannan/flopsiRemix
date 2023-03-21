@@ -10,15 +10,11 @@ import { MdEdit } from "react-icons/md";
 
 import { purple } from "@mui/material/colors";
 
-export default function NewIngredientTable({ rows }) {
+export default function NewIngredientTable({ rows, scale }) {
   console.log(rows);
   if (rows) {
     return (
-      <TableContainer
-        component={Paper}
-        variant="outlined"
-        sx={{ maxHeight: "65vh" }}
-      >
+      <TableContainer component={Paper} variant="outlined">
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -52,7 +48,7 @@ export default function NewIngredientTable({ rows }) {
                     {row.ingredient}
                   </TableCell>
                   <TableCell sx={{ fontSize: "1rem" }} align="right">
-                    {row.qty}
+                    {row.qty * scale}
                   </TableCell>
                   <TableCell sx={{ fontSize: "1rem" }} align="right">
                     {row.unit}
