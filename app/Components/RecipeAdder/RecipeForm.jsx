@@ -5,7 +5,7 @@ import AllergensSelect from "./AllergensSelect";
 import IngredientSection from "./IngredientSection";
 import RecipeStepSection from "./RecipeStepSection";
 
-const RecipeForm = ({ recipe }) => {
+const RecipeForm = ({ recipe, recipeList }) => {
   const [recipeValues, setRecipeValues] = useState(
     recipe || {
       name: "",
@@ -71,7 +71,10 @@ const RecipeForm = ({ recipe }) => {
         />
       </Box>
       <AllergensSelect allergenList={recipeValues.allergens} />
-      <IngredientSection ingredientsList={recipeValues.ingredients} />
+      <IngredientSection
+        ingredientsList={recipeValues.ingredients}
+        recipeList={recipeList}
+      />
       <RecipeStepSection stepsList={recipeValues.steps} />
       <Button
         type="submit"

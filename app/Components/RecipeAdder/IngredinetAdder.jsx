@@ -4,9 +4,10 @@ import { useState } from "react";
 import { MdClose } from "react-icons/md";
 
 import top100Films from "./FAKELIST";
-const IngredientAdder = ({ id, handleDelete, ingredientObj }) => {
+const IngredientAdder = ({ id, handleDelete, ingredientObj, recipeList }) => {
   const [updatedIngredient, setUpdatedIngredient] = useState(ingredientObj);
 
+  const options = recipeList.map((r) => ({ label: r.name }));
   return (
     <Stack spacing={2}>
       <Box sx={{ display: "flex" }}>
@@ -40,6 +41,7 @@ const IngredientAdder = ({ id, handleDelete, ingredientObj }) => {
           label="Qty"
           name="qty"
           type="number"
+          inputProps={{ inputMode: "numeric" }}
           required
           value={updatedIngredient.qty}
           onChange={(e) =>
@@ -56,12 +58,20 @@ const IngredientAdder = ({ id, handleDelete, ingredientObj }) => {
             setUpdatedIngredient({ ...updatedIngredient, unit: e.target.value })
           }
         />
+        <TextField
+          sx={{ display: "none" }}
+          label="textBox"
+          name="testBox"
+          required
+          value="1994"
+        />
         <Autocomplete
           disablePortal
           id="combo-box-demo"
           sx={{ flex: "2" }}
-          options={top100Films}
-          onChange={(e) => console.log(e)}
+          name="linkRecipeBox"
+          options={options}
+          onChange={(e, nv) => console.log(e, nv)}
           renderInput={(params) => (
             <TextField {...params} label="Link to recipe..." />
           )}

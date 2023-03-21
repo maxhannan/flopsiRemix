@@ -1,6 +1,6 @@
 import { CircularProgress, Fab } from "@mui/material";
 import { useLoaderData } from "@remix-run/react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import { useNavigation } from "react-router";
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
@@ -12,7 +12,6 @@ import { getRecipes } from "../../../utils/recipes.server";
 
 export const loader = async () => {
   const recipes = await getRecipes();
-  console.log(recipes);
   return recipes;
 };
 const RecipeIndex = () => {
@@ -21,14 +20,23 @@ const RecipeIndex = () => {
 
   const recipes = useLoaderData();
   const navigation = useNavigation();
-
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All Recipes");
   if (navigation.state === "loading") {
     return <CircularProgress />;
   }
+
   return (
     <>
-      <SearchAndFilter />
-      {recipes && <RecipeFeed recipes={recipes} />}
+      <SearchAndFilter
+        search={search}
+        setSearch={setSearch}
+        category={category}
+        setCategory={setCategory}
+      />
+      {recipes && (
+        <RecipeFeed recipes={recipes} search={search} category={category} />
+      )}
 
       <Fab
         sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}

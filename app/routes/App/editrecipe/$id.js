@@ -10,6 +10,8 @@ export const action = async ({ request, params }) => {
   const iL = data.getAll("ingredient");
   const qL = data.getAll("qty");
   const uL = data.getAll("unit");
+  const lB = data.getAll("testBox");
+  console.log("LBBBBB", lB);
 
   const ingredients = iL.map((i) => {
     return {

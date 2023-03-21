@@ -21,18 +21,19 @@ import RecipeForm from "../../../Components/RecipeAdder/RecipeForm";
 import RecipeInstructions from "../../../Components/RecipeInstructions";
 import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 
-import { getRecipeById } from "../../../utils/recipes.server";
+import { getRecipeById, getRecipes } from "../../../utils/recipes.server";
 
 export const loader = async ({ params }) => {
-  console.log(params);
   const recipe = await getRecipeById(params.recipeId);
-  console.log(recipe);
-  return recipe;
+  const recipeList = await getRecipes();
+  console.log(recipeList);
+
+  return { recipe, recipeList };
 };
 
 const Recipe = () => {
   const navigate = useNavigate();
-  const recipe = useLoaderData();
+  const { recipe, recipeList } = useLoaderData();
   const navigation = useNavigation();
   const action = `/app/editrecipe/${recipe.id}`;
   const [open, setOpen] = useState(false);
@@ -119,7 +120,7 @@ const Recipe = () => {
       >
         <Container sx={{ my: "2rem" }} disableGutters>
           <Form action={action} method="post">
-            <RecipeForm recipe={recipe} />
+            <RecipeForm recipe={recipe} recipeList={recipeList} />
           </Form>
         </Container>
       </FullScreenDialog>
