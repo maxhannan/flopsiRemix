@@ -11,14 +11,19 @@ export const createRecipe = async (recipe, userId) => {
 };
 
 export const getRecipes = async () => {
-  const recipes = await prisma.recipe.findMany({
-    select: {
-      id: true,
-      name: true,
-      category: true,
-    },
-  });
-  return recipes;
+  try {
+    const recipes = await prisma.recipe.findMany({
+      select: {
+        id: true,
+        name: true,
+        category: true,
+      },
+    });
+    return recipes;
+  } catch (error) {
+    return null;
+  }
+  return null;
 };
 
 export const getRecipeById = async (recipeId) => {
