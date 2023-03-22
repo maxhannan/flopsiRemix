@@ -55,18 +55,6 @@ const BottomNav = () => {
           onClick={() => handleClick("convert")}
           icon={<TbMath size="2rem" />}
         />
-        <NavBtn
-          label="Calendar"
-          value="calendar"
-          onClick={() => handleClick("calendar")}
-          icon={<RiCalendarEventLine size="2rem" />}
-        />
-        <NavBtn
-          label="Chat"
-          value="chat"
-          onClick={() => handleClick("chat")}
-          icon={<MdOutlineChat size="2rem" />}
-        />
       </BottomNavigation>
     </Paper>
   );

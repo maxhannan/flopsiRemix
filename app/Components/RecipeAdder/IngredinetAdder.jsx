@@ -9,7 +9,6 @@ const IngredientAdder = ({
   handleDelete,
   ingredientObj,
   recipeList,
-
   handleChange,
 }) => {
   const [linkRecipeValue, setLinkRecipeValue] = useState("");

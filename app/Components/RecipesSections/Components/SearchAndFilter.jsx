@@ -1,8 +1,6 @@
 import { Box, FormControl, MenuItem, Select, TextField } from "@mui/material";
-import { useState } from "react";
-const SearchAndFilter = ({ setSearch, search, setCategory, category }) => {
-  const [menu, setMenu] = useState("All Recipes");
 
+const SearchAndFilter = ({ setSearch, search, setCategory, category }) => {
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
