@@ -43,7 +43,6 @@ function getStyles(name, personName, theme) {
 }
 
 export default function AllergensSelect({ allergenList }) {
-  console.log(allergenList);
   const theme = useTheme();
   const [personName, setPersonName] = React.useState(
     allergenList[0] ? allergenList : []

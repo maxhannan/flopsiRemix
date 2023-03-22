@@ -35,7 +35,6 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
     const newIngredients = ingredients.filter((i) => i.id !== id);
     setIngredients(newIngredients);
   };
-
   const handleChange = (id, field, newValue) => {
     const newIngredients = ingredients.map((i) => {
       if (i.id === id) {
@@ -61,11 +60,11 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
           return (
             <IngredientAdder
               recipeList={recipeList}
-              key={v4()}
+              key={i.id}
               id={i.id}
-              handleChange={handleChange}
               ingredientObj={i}
               handleDelete={handleDelete}
+              handleChange={handleChange}
             />
           );
         })}

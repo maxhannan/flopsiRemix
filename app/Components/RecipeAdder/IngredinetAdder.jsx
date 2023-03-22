@@ -2,12 +2,14 @@ import { Autocomplete, Divider, IconButton, TextField } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
+import { v4 } from "uuid";
 
 const IngredientAdder = ({
   id,
   handleDelete,
   ingredientObj,
   recipeList,
+
   handleChange,
 }) => {
   const [linkRecipeValue, setLinkRecipeValue] = useState("");
@@ -16,6 +18,7 @@ const IngredientAdder = ({
   const handleChangeLink = (id) => {
     setLinkRecipeValue(id || "");
   };
+
   return (
     <Stack spacing={2}>
       <Box sx={{ display: "flex" }}>
@@ -23,7 +26,7 @@ const IngredientAdder = ({
           multiline
           sx={{ flex: "3", mr: ".5em" }}
           label="Ingredient Name"
-          value={ingredientObj.ingredient}
+          defaultValue={ingredientObj.ingredient}
           name="ingredient"
           required
           onChange={(e) => handleChange(id, "ingredient", e.target.value)}
