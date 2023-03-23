@@ -1,8 +1,7 @@
-import { json, createCookieSessionStorage } from "@remix-run/node";
+import { json, createCookieSessionStorage, redirect } from "@remix-run/node";
 import { prisma } from "./prisma.server";
 import { createUser } from "./user.server";
 import bcrypt from "bcryptjs";
-import { redirect } from "react-router";
 
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {

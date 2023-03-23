@@ -7,11 +7,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { motion } from "framer-motion";
+
 import { Box } from "@mui/system";
-import { useLoaderData } from "@remix-run/react";
-import { useContext, useEffect, useState } from "react";
+import {
+  useLoaderData,
+  Form,
+  useNavigate,
+  useNavigation,
+  useSubmit,
+  useLocation,
+} from "@remix-run/react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { MdClose, MdOutlineEditNote } from "react-icons/md";
-import { Form, useNavigate, useNavigation } from "react-router-dom";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import ScaleFormDialog from "../../../Components/Menus/ScaleDialog";
@@ -26,14 +34,16 @@ import { getRecipeById, getRecipes } from "../../../utils/recipes.server";
 export const loader = async ({ params }) => {
   const recipe = await getRecipeById(params.recipeId);
   const recipeList = await getRecipes();
-  console.log(recipeList);
 
   return { recipe, recipeList };
 };
 
 const Recipe = () => {
+  const lastMessage = useRef({});
   const navigate = useNavigate();
-  const { recipe, recipeList } = useLoaderData();
+  const data = useLoaderData() || lastMessage.current;
+
+  const { recipe, recipeList } = data;
   const navigation = useNavigation();
   const action = `/app/editrecipe/${recipe.id}`;
   const [open, setOpen] = useState(false);
@@ -41,15 +51,14 @@ const Recipe = () => {
 
   useEffect(() => {
     if (navigation.state === "submitting") {
-      console.log("INSIDE");
       setOpen(!open);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
 
-  if (navigation.state === "loading" || !recipe) {
-    return <CircularProgress />;
-  }
+  useEffect(() => {
+    if (data) lastMessage.current = data;
+  }, [data]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,7 +69,11 @@ const Recipe = () => {
   };
 
   return (
-    <>
+    <motion.div
+      key={useLocation().pathname}
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <Box sx={{ display: "flex", mb: ".25rem" }}>
         <Box sx={{ flexGrow: 1 }}>
           <Stack spacing={0}>
@@ -124,7 +137,7 @@ const Recipe = () => {
           </Form>
         </Container>
       </FullScreenDialog>
-    </>
+    </motion.div>
   );
 };
 

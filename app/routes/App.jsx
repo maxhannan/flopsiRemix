@@ -1,17 +1,27 @@
 import { Box, Container } from "@mui/material";
-import { Outlet } from "@remix-run/react";
+import {
+  Outlet,
+  useLocation,
+  useNavigation,
+  useOutlet,
+} from "@remix-run/react";
+import { AnimatePresence, motion } from "framer-motion";
+
 import BottomNav from "../Components/Navigation/BottomNav";
 import NavBar from "../Components/Navigation/NavBar";
 import { AddRecipeContextProvider } from "../Context/RecipeAdderCtx";
 import { getUser, requireUserId } from "../utils/auth.server";
 
-export const loader = async ({ request }) => {
+export const loader = async ({ request, params }) => {
   await requireUserId(request);
   const user = await getUser(request);
-  console.log(user);
+
   return user;
 };
+
 const App = () => {
+  const outlet = useOutlet();
+  const location = useLocation();
   return (
     <AddRecipeContextProvider>
       <Box>
@@ -20,7 +30,10 @@ const App = () => {
           maxWidth="xl"
           sx={{ paddingTop: "5em", paddingBottom: "7em", paddingX: "0" }}
         >
-          <Outlet />
+          <AnimatePresence mode="wait">
+            <motion.main key={location.pathname}>{outlet}</motion.main>
+          </AnimatePresence>
+
           <BottomNav />
         </Container>
       </Box>

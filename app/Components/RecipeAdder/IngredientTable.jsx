@@ -7,7 +7,6 @@ import Paper from "@mui/material/Paper";
 import { Checkbox, TableHead } from "@mui/material";
 
 export default function NewIngredientTable({ rows, scale }) {
-  console.log(rows);
   if (rows) {
     return (
       <TableContainer component={Paper} variant="outlined">

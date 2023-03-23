@@ -1,15 +1,15 @@
 import { CircularProgress, Fab } from "@mui/material";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useLocation } from "@remix-run/react";
 import { useContext, useState } from "react";
 import { MdAdd } from "react-icons/md";
-import { useNavigation } from "react-router";
+
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import RecipeAdder from "../../../Components/RecipeAdder/RecipeAdder";
 import SearchAndFilter from "../../../Components/RecipesSections/Components/SearchAndFilter";
 import RecipeFeed from "../../../Components/RecipesSections/RecipeFeed";
 import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 import { getRecipes } from "../../../utils/recipes.server";
-
+import { motion } from "framer-motion";
 export const loader = async () => {
   const recipes = await getRecipes();
   return recipes;
@@ -19,15 +19,16 @@ const RecipeIndex = () => {
     useContext(AddRecipeContext);
 
   const recipes = useLoaderData();
-  const navigation = useNavigation();
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Recipes");
-  if (navigation.state === "loading") {
-    return <CircularProgress />;
-  }
 
   return (
-    <>
+    <motion.div
+      key={useLocation().pathname}
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <SearchAndFilter
         search={search}
         setSearch={setSearch}
@@ -55,7 +56,7 @@ const RecipeIndex = () => {
       >
         <RecipeAdder recipeList={recipes} />
       </FullScreenDialog>
-    </>
+    </motion.div>
   );
 };
 

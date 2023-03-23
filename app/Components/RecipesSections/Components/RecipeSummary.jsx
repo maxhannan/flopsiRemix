@@ -1,7 +1,7 @@
 import { Avatar, Card, CardActionArea, CardHeader } from "@mui/material";
 import { purple } from "@mui/material/colors";
+import { useNavigate } from "@remix-run/react";
 import { MdOutlineChevronRight } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 const RecipeSummary = ({ recipe }) => {
   const navigate = useNavigate();

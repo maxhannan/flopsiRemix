@@ -1,11 +1,13 @@
 import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
 import { Stack } from "@mui/system";
+import { useNavigation } from "@remix-run/react";
 import { useState } from "react";
 import AllergensSelect from "./AllergensSelect";
 import IngredientSection from "./IngredientSection";
 import RecipeStepSection from "./RecipeStepSection";
 
 const RecipeForm = ({ recipe, recipeList }) => {
+  const navigation = useNavigation();
   const [recipeValues, setRecipeValues] = useState(
     recipe || {
       name: "",
@@ -20,6 +22,8 @@ const RecipeForm = ({ recipe, recipeList }) => {
   const handleChange = (change, field) => {
     setRecipeValues({ ...recipeValues, [field]: change });
   };
+
+  const btnText = recipe ? "Update" : "Save";
 
   return (
     <Stack spacing={2}>
@@ -82,7 +86,7 @@ const RecipeForm = ({ recipe, recipeList }) => {
         disableElevation
         color="secondary"
       >
-        {recipe ? "Update" : "Save"}
+        {navigation.state === "submitting" ? "Submitting..." : btnText}
       </Button>
     </Stack>
   );

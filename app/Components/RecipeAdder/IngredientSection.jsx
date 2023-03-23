@@ -28,7 +28,6 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
       unit: "",
     };
     setIngredients([...ingredients, newIngredient]);
-    console.log(ingredients);
   };
 
   const handleDelete = (id) => {

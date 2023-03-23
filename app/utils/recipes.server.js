@@ -13,6 +13,11 @@ export const createRecipe = async (recipe, userId) => {
 export const getRecipes = async () => {
   try {
     const recipes = await prisma.recipe.findMany({
+      orderBy: [
+        {
+          name: "asc",
+        },
+      ],
       select: {
         id: true,
         name: true,
@@ -27,6 +32,7 @@ export const getRecipes = async () => {
         },
       },
     });
+
     return recipes;
   } catch (error) {
     return null;
