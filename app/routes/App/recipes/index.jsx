@@ -24,6 +24,7 @@ const RecipeIndex = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Recipes");
+
   if (navigation.state === "loading") {
     return <LoadingComponent />;
   }
@@ -31,7 +32,7 @@ const RecipeIndex = () => {
   return (
     <motion.div
       key={location.pathname}
-      initial={{ opacity: 0, y: 100 }}
+      initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
     >
       <SearchAndFilter

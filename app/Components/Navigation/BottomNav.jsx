@@ -25,6 +25,7 @@ const BottomNav = () => {
   }, [location]);
 
   const handleClick = (path) => {
+    setValue(path);
     navigate(`/app/${path}`);
   };
 
