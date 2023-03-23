@@ -36,6 +36,14 @@ export const loader = async ({ params }) => {
   return { recipe, recipeList };
 };
 
+export function meta() {
+  return {
+    // <meta name="description" content="Welcome to the web!" />
+    "apple-mobile-web-app-capable": "yes",
+    // <meta name="theme-color" content="#f22" />
+    "apple-mobile-web-app-status-bar-style": "default",
+  };
+}
 const Recipe = () => {
   const lastMessage = useRef({});
   const navigate = useNavigate();
