@@ -103,7 +103,7 @@ const Recipe = () => {
           </IconButton>
         </Box>
         <Box>
-          <IconButton onClick={() => navigate("/app/recipes")}>
+          <IconButton onClick={() => navigate(-1)}>
             <MdClose />
           </IconButton>
         </Box>

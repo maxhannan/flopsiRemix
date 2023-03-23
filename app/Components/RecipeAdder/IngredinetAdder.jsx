@@ -2,7 +2,6 @@ import { Autocomplete, Divider, IconButton, TextField } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
-import { v4 } from "uuid";
 
 const IngredientAdder = ({
   id,
@@ -11,23 +10,26 @@ const IngredientAdder = ({
   recipeList,
   handleChange,
 }) => {
-  const [linkRecipeValue, setLinkRecipeValue] = useState("");
-  const [ingredientValue, setIngredientValue] = useState(
-    ingredientObj.ingredient
-  );
-  const [focused, setFocused] = useState(false);
   const options = recipeList.map((r) => ({ label: r.name, id: r.id }));
-  console.log("OBJJ");
   const optionFound = options.filter((o) => o.id === ingredientObj.linkId);
-  console.log(optionFound);
-  const [linkRecipeValueTest, setLinkRecipeValueTest] = useState(
+
+  const [linkRecipeValue, setLinkRecipeValue] = useState(
     optionFound.length > 0 ? optionFound[0] : null
   );
 
   const handleChangeLink = async (nv) => {
-    setLinkRecipeValue(nv ? nv.id : "");
-    setLinkRecipeValueTest(nv);
-    setIngredientValue(nv ? nv.label : "");
+    setLinkRecipeValue(nv);
+    handleChange(id, "ingredient", nv ? nv.label : "");
+  };
+
+  const handleInput = (e) => {
+    console.log(setLinkRecipeValue.label, e.target.value);
+    if (setLinkRecipeValue.label !== e.target.value) {
+      handleChange(id, "ingredient", e.target.value);
+      setLinkRecipeValue(null);
+      return;
+    }
+    handleChange(id, "ingredient", e.target.value);
   };
 
   return (
@@ -35,13 +37,14 @@ const IngredientAdder = ({
       <Box sx={{ display: "flex" }}>
         <TextField
           multiline
-          focused={ingredientValue.length > 0}
           sx={{ flex: "3", mr: ".5em" }}
           label="Ingredient Name"
-          defaultValue={ingredientValue}
+          color={linkRecipeValue && "success"}
+          focused={linkRecipeValue ? true : false}
+          value={ingredientObj.ingredient}
           name="ingredient"
           required
-          onChange={(e) => handleChange(id, "ingredient", e.target.value)}
+          onChange={(e) => handleInput(e)}
         />
 
         <IconButton
@@ -76,7 +79,7 @@ const IngredientAdder = ({
           sx={{ display: "none" }}
           label="linkBox"
           name="linkBox"
-          value={linkRecipeValue}
+          value={linkRecipeValue ? linkRecipeValue.id : ""}
         />
         <Autocomplete
           disablePortal
@@ -85,14 +88,14 @@ const IngredientAdder = ({
           sx={{ flex: "2" }}
           name="linkRecipeBox"
           options={options}
-          value={linkRecipeValueTest}
+          value={linkRecipeValue}
           onChange={(e, nv) => {
             handleChangeLink(nv);
           }}
           renderInput={(params) => (
             <TextField
               {...params}
-              value={linkRecipeValueTest}
+              value={linkRecipeValue}
               label="Link to recipe..."
             />
           )}
