@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { Outlet, useNavigation } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 
 const Recipes = () => {
   return (

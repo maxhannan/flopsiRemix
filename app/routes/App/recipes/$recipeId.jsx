@@ -1,6 +1,5 @@
 import {
   Chip,
-  CircularProgress,
   Container,
   Grid,
   IconButton,
@@ -15,10 +14,9 @@ import {
   Form,
   useNavigate,
   useNavigation,
-  useSubmit,
   useLocation,
 } from "@remix-run/react";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdClose, MdOutlineEditNote } from "react-icons/md";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
@@ -27,7 +25,6 @@ import ScaleFormDialog from "../../../Components/Menus/ScaleDialog";
 import NewIngredientTable from "../../../Components/RecipeAdder/IngredientTable";
 import RecipeForm from "../../../Components/RecipeAdder/RecipeForm";
 import RecipeInstructions from "../../../Components/RecipeInstructions";
-import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 
 import { getRecipeById, getRecipes } from "../../../utils/recipes.server";
 import LoadingComponent from "../../../Components/LoadingComponent";
@@ -45,6 +42,7 @@ const Recipe = () => {
   const data = useLoaderData() || lastMessage.current;
   const location = useLocation();
   const { recipe, recipeList } = data;
+  const filteredList = recipeList.filter((r) => r.id !== recipe.id);
   const navigation = useNavigation();
   const action = `/app/editrecipe/${recipe.id}`;
   const [open, setOpen] = useState(false);
@@ -136,7 +134,7 @@ const Recipe = () => {
       >
         <Container sx={{ my: "2rem" }} disableGutters>
           <Form action={action} method="post">
-            <RecipeForm recipe={recipe} recipeList={recipeList} />
+            <RecipeForm recipe={recipe} recipeList={filteredList} />
           </Form>
         </Container>
       </FullScreenDialog>

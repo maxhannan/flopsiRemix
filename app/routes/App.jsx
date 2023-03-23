@@ -1,10 +1,5 @@
 import { Box, Container } from "@mui/material";
-import {
-  Outlet,
-  useLocation,
-  useNavigation,
-  useOutlet,
-} from "@remix-run/react";
+import { useLocation, useOutlet } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import BottomNav from "../Components/Navigation/BottomNav";

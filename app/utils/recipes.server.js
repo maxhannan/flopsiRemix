@@ -66,5 +66,53 @@ export const updateRecipe = async (recipe, recipeId) => {
       ...recipe,
     },
   });
+
+  console.log("New Recipe w/ links", updatedRecipe);
   return updatedRecipe;
+};
+
+export const extractRecipe = (data) => {
+  const allergens = data.get("allergens").split(",");
+  const yu = data.get("yieldUnit");
+  const yq = data.get("yieldQty");
+  const iL = data.getAll("ingredient");
+  const qL = data.getAll("qty");
+  const uL = data.getAll("unit");
+  const links = data.getAll("linkBox");
+
+  const linkedIngredients = iL.map((i) => {
+    if (links[iL.indexOf(i)].length > 0) {
+      return {
+        ingredient: i,
+        qty: qL[iL.indexOf(i)],
+        unit: uL[iL.indexOf(i)],
+        linkId: links[iL.indexOf(i)],
+      };
+    }
+    return {
+      ingredient: i,
+      qty: qL[iL.indexOf(i)],
+      unit: uL[iL.indexOf(i)],
+      linkId: null,
+    };
+  });
+
+  const ingredients = iL.map((i) => {
+    return {
+      ingredient: i,
+      qty: qL[iL.indexOf(i)],
+      unit: uL[iL.indexOf(i)],
+    };
+  });
+
+  const newRecipe = {
+    name: data.get("recipeName"),
+    category: data.get("category"),
+    allergens: allergens,
+    yield: { yieldQty: yq, yieldUnit: yu },
+    ingredients: linkedIngredients,
+    steps: data.getAll("step"),
+  };
+
+  return newRecipe;
 };

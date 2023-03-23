@@ -13,7 +13,7 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
           {
             id: v4(),
             ingredient: "",
-            linkedRecipe: null,
+            linkId: null,
             qty: "",
             unit: "",
           },
@@ -23,7 +23,7 @@ const IngredientsSection = ({ ingredientsList, recipeList }) => {
     const newIngredient = {
       id: v4(),
       ingredient: "",
-      linkedRecipe: null,
+      linkId: null,
       qty: "",
       unit: "",
     };

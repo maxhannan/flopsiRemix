@@ -26,7 +26,6 @@ const RecipeStepSection = ({ stepsList }) => {
       id: v4(),
     };
     setSteps([...steps, newStep]);
-    console.log(steps);
   };
   const handleDelete = (id) => {
     const newSteps = steps.filter((i) => i.id !== id);

@@ -5,6 +5,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Checkbox, TableHead } from "@mui/material";
+import { Link } from "@remix-run/react";
+import { Box } from "@mui/system";
 
 export default function NewIngredientTable({ rows, scale }) {
   if (rows) {
@@ -34,13 +36,21 @@ export default function NewIngredientTable({ rows, scale }) {
                     <Checkbox />
                   </TableCell>
                   <TableCell
+                    onClick={() => console.log(row.ingredient)}
                     sx={{
                       fontSize: "1rem",
+                      cursor: row.linkId ? "pointer" : "-moz-initial",
                     }}
                     component="th"
                     scope="row"
                   >
-                    {row.ingredient}
+                    {row.linkId ? (
+                      <Link to={`/app/recipes/${row.linkId}`}>
+                        {row.ingredient}
+                      </Link>
+                    ) : (
+                      row.ingredient
+                    )}
                   </TableCell>
                   <TableCell sx={{ fontSize: "1rem" }} align="right">
                     {row.qty * scale}

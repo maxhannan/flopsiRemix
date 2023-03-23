@@ -51,5 +51,5 @@ type Ingredient {
   ingredient  String
   qty         String
   unit        String
-
+  linkId      String?     
 }

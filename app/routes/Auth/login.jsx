@@ -48,7 +48,7 @@ export const action = async ({ request }) => {
 
 const LoginComponent = () => {
   const navigation = useNavigation();
-  console.log(navigation);
+
   if (navigation.state === "loading") {
     return <CircularProgress />;
   }

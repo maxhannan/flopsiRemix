@@ -12,10 +12,22 @@ const IngredientAdder = ({
   handleChange,
 }) => {
   const [linkRecipeValue, setLinkRecipeValue] = useState("");
+  const [ingredientValue, setIngredientValue] = useState(
+    ingredientObj.ingredient
+  );
+  const [focused, setFocused] = useState(false);
   const options = recipeList.map((r) => ({ label: r.name, id: r.id }));
+  console.log("OBJJ");
+  const optionFound = options.filter((o) => o.id === ingredientObj.linkId);
+  console.log(optionFound);
+  const [linkRecipeValueTest, setLinkRecipeValueTest] = useState(
+    optionFound.length > 0 ? optionFound[0] : null
+  );
 
-  const handleChangeLink = (id) => {
-    setLinkRecipeValue(id || "");
+  const handleChangeLink = async (nv) => {
+    setLinkRecipeValue(nv ? nv.id : "");
+    setLinkRecipeValueTest(nv);
+    setIngredientValue(nv ? nv.label : "");
   };
 
   return (
@@ -23,9 +35,10 @@ const IngredientAdder = ({
       <Box sx={{ display: "flex" }}>
         <TextField
           multiline
+          focused={ingredientValue.length > 0}
           sx={{ flex: "3", mr: ".5em" }}
           label="Ingredient Name"
-          defaultValue={ingredientObj.ingredient}
+          defaultValue={ingredientValue}
           name="ingredient"
           required
           onChange={(e) => handleChange(id, "ingredient", e.target.value)}
@@ -61,8 +74,8 @@ const IngredientAdder = ({
         />
         <TextField
           sx={{ display: "none" }}
-          label="textBox"
-          name="testBox"
+          label="linkBox"
+          name="linkBox"
           value={linkRecipeValue}
         />
         <Autocomplete
@@ -72,9 +85,16 @@ const IngredientAdder = ({
           sx={{ flex: "2" }}
           name="linkRecipeBox"
           options={options}
-          onChange={(e, nv) => handleChangeLink(nv.id)}
+          value={linkRecipeValueTest}
+          onChange={(e, nv) => {
+            handleChangeLink(nv);
+          }}
           renderInput={(params) => (
-            <TextField {...params} label="Link to recipe..." />
+            <TextField
+              {...params}
+              value={linkRecipeValueTest}
+              label="Link to recipe..."
+            />
           )}
         />
       </Box>
