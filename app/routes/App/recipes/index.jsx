@@ -1,5 +1,5 @@
 import { CircularProgress, Fab } from "@mui/material";
-import { useLoaderData, useLocation } from "@remix-run/react";
+import { useLoaderData, useLocation, useNavigation } from "@remix-run/react";
 import { useContext, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
@@ -9,6 +9,7 @@ import SearchAndFilter from "../../../Components/RecipesSections/Components/Sear
 import RecipeFeed from "../../../Components/RecipesSections/RecipeFeed";
 import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 import { getRecipes } from "../../../utils/recipes.server";
+import LoadingComponent from "../../../Components/LoadingComponent";
 import { motion } from "framer-motion";
 export const loader = async () => {
   const recipes = await getRecipes();
@@ -17,15 +18,19 @@ export const loader = async () => {
 const RecipeIndex = () => {
   const { open, handleClickOpen, handleCloseDialog } =
     useContext(AddRecipeContext);
+  const location = useLocation();
 
   const recipes = useLoaderData();
-
+  const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Recipes");
+  if (navigation.state === "loading") {
+    return <LoadingComponent />;
+  }
 
   return (
     <motion.div
-      key={useLocation().pathname}
+      key={location.pathname}
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
     >

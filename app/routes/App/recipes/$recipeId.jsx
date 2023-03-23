@@ -30,6 +30,7 @@ import RecipeInstructions from "../../../Components/RecipeInstructions";
 import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 
 import { getRecipeById, getRecipes } from "../../../utils/recipes.server";
+import LoadingComponent from "../../../Components/LoadingComponent";
 
 export const loader = async ({ params }) => {
   const recipe = await getRecipeById(params.recipeId);
@@ -42,7 +43,7 @@ const Recipe = () => {
   const lastMessage = useRef({});
   const navigate = useNavigate();
   const data = useLoaderData() || lastMessage.current;
-
+  const location = useLocation();
   const { recipe, recipeList } = data;
   const navigation = useNavigation();
   const action = `/app/editrecipe/${recipe.id}`;
@@ -67,10 +68,12 @@ const Recipe = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  if (navigation.state === "loading") {
+    return <LoadingComponent />;
+  }
   return (
     <motion.div
-      key={useLocation().pathname}
+      key={location.pathname}
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
     >
