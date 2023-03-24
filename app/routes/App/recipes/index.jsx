@@ -36,24 +36,27 @@ const RecipeIndex = () => {
   }
 
   return (
-    <>
+    <motion.div
+      key={location.pathname}
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <SearchAndFilter
+        search={search}
+        setSearch={setSearch}
+        categories={categories}
+        category={category}
+        setCategory={setCategory}
+      />
+      {recipes && (
+        <RecipeFeed recipes={recipes} search={search} category={category} />
+      )}
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
       >
-        <SearchAndFilter
-          search={search}
-          setSearch={setSearch}
-          categories={categories}
-          category={category}
-          setCategory={setCategory}
-        />
-        {recipes && (
-          <RecipeFeed recipes={recipes} search={search} category={category} />
-        )}
-      </motion.div>
-      <motion.div key={v4()} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Fab
           sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
           size="large"
@@ -71,7 +74,7 @@ const RecipeIndex = () => {
       >
         <RecipeAdder recipeList={recipes} />
       </FullScreenDialog>
-    </>
+    </motion.div>
   );
 };
 

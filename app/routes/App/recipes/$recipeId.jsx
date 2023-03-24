@@ -91,11 +91,7 @@ const Recipe = () => {
     return <LoadingComponent />;
   }
   return (
-    <motion.div
-      key={location.pathname}
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
+    <motion.div key={location.pathname} initial={{ y: 100 }} animate={{ y: 0 }}>
       <Box sx={{ display: "flex", mb: ".25rem" }}>
         <Box sx={{ flexGrow: 1 }}>
           <Stack spacing={0}>
