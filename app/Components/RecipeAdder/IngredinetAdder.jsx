@@ -93,11 +93,7 @@ const IngredientAdder = ({
             handleChangeLink(nv);
           }}
           renderInput={(params) => (
-            <TextField
-              {...params}
-              value={linkRecipeValue}
-              label="Link to recipe..."
-            />
+            <TextField {...params} label="Link to recipe..." />
           )}
         />
       </Box>

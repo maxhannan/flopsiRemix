@@ -11,6 +11,7 @@ import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 import { getRecipes } from "../../../utils/recipes.server";
 import LoadingComponent from "../../../Components/LoadingComponent";
 import { motion } from "framer-motion";
+import { v4 } from "uuid";
 export const loader = async () => {
   const recipes = await getRecipes();
   return recipes;
@@ -21,6 +22,11 @@ const RecipeIndex = () => {
   const location = useLocation();
 
   const recipes = useLoaderData();
+  const categories =
+    recipes &&
+    [...new Set(recipes.map((item) => item.category))].filter(
+      (r) => r !== "All Recipes"
+    );
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Recipes");
@@ -30,30 +36,33 @@ const RecipeIndex = () => {
   }
 
   return (
-    <motion.div
-      key={location.pathname}
-      initial={{ opacity: 0, y: -100 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <SearchAndFilter
-        search={search}
-        setSearch={setSearch}
-        category={category}
-        setCategory={setCategory}
-      />
-      {recipes && (
-        <RecipeFeed recipes={recipes} search={search} category={category} />
-      )}
-
-      <Fab
-        sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
-        size="large"
-        color="secondary"
-        onClick={handleClickOpen}
+    <>
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
       >
-        <MdAdd size="2rem" />
-      </Fab>
-
+        <SearchAndFilter
+          search={search}
+          setSearch={setSearch}
+          categories={categories}
+          category={category}
+          setCategory={setCategory}
+        />
+        {recipes && (
+          <RecipeFeed recipes={recipes} search={search} category={category} />
+        )}
+      </motion.div>
+      <motion.div key={v4()} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <Fab
+          sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
+          size="large"
+          color="secondary"
+          onClick={handleClickOpen}
+        >
+          <MdAdd size="2rem" />
+        </Fab>
+      </motion.div>
       <FullScreenDialog
         title={"Add Recipe"}
         open={open}
@@ -62,7 +71,7 @@ const RecipeIndex = () => {
       >
         <RecipeAdder recipeList={recipes} />
       </FullScreenDialog>
-    </motion.div>
+    </>
   );
 };
 

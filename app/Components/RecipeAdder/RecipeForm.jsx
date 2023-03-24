@@ -3,24 +3,32 @@ import { Stack } from "@mui/system";
 import { useNavigation } from "@remix-run/react";
 import { useState } from "react";
 import AllergensSelect from "./AllergensSelect";
+import CategorySelect from "./CategorySelect";
 import IngredientSection from "./IngredientSection";
 import RecipeStepSection from "./RecipeStepSection";
 
-const RecipeForm = ({ recipe, recipeList }) => {
+const RecipeForm = ({ recipe, recipeList, filteredList }) => {
   const navigation = useNavigation();
-  const [recipeValues, setRecipeValues] = useState(
-    recipe || {
-      name: "",
-      category: "All Recipes",
-      allergens: [],
-      yield: { yieldQty: "", yieldUnit: "" },
-      ingredients: [{ ingredient: "", qty: "", unit: "" }],
-      steps: [""],
-    }
-  );
+  console.log(recipe, recipeList);
+  const categories = [
+    ...new Set(recipeList.map((item) => item.category)),
+  ].filter((r) => r !== "All Recipes");
 
-  const handleChange = (change, field) => {
-    setRecipeValues({ ...recipeValues, [field]: change });
+  const findCategory =
+    recipe && categories.filter((c) => c === recipe.category);
+  const initValue =
+    findCategory && findCategory.length > 0 ? findCategory : ["All Recipes"];
+
+  categories.unshift("All Recipes");
+  const testOptions = categories.map((c) => ({ title: c }));
+
+  const recipeValues = recipe || {
+    name: "",
+    category: "All Recipes",
+    allergens: [],
+    yield: { yieldQty: "", yieldUnit: "" },
+    ingredients: [{ ingredient: "", qty: "", unit: "" }],
+    steps: [""],
   };
 
   const btnText = recipe ? "Update" : "Save";
@@ -34,26 +42,11 @@ const RecipeForm = ({ recipe, recipeList }) => {
         required
         fullWidth
       />
-      <Select
-        color="secondary"
-        value={recipeValues.category}
-        onChange={(e) => handleChange(e.target.value, "category")}
-        labelId="category"
-        id="category"
-        name="category"
-      >
-        <MenuItem value={"All Recipes"}>All Recipes</MenuItem>
-        <MenuItem value={"Breads/Crackers/Wraps"}>
-          Breads/Crackers/Wraps
-        </MenuItem>
-        <MenuItem value={"Spreads"}>Spreads</MenuItem>
-        <MenuItem value={"Raw & Cured"}>Raw & Cured</MenuItem>
-        <MenuItem value={"Land & Sea"}>Land & Sea</MenuItem>
-        <MenuItem value={"Vegetables"}>Vegetables</MenuItem>
-        <MenuItem value={"Spice Mix"}>Spice Mix</MenuItem>
-        <MenuItem value={"Dairy"}>Dairy</MenuItem>
-        <MenuItem value={"Pasta Dough"}>Pasta Dough</MenuItem>
-      </Select>
+
+      <CategorySelect
+        initValue={{ title: initValue[0] }}
+        categories={testOptions}
+      />
       <Box sx={{ display: "flex" }}>
         <TextField
           sx={{ flex: "1", mr: "1rem" }}
@@ -77,7 +70,7 @@ const RecipeForm = ({ recipe, recipeList }) => {
       <AllergensSelect allergenList={recipeValues.allergens} />
       <IngredientSection
         ingredientsList={recipeValues.ingredients}
-        recipeList={recipeList}
+        recipeList={filteredList || recipeList}
       />
       <RecipeStepSection stepsList={recipeValues.steps} />
       <Button

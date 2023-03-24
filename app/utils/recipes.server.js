@@ -1,3 +1,4 @@
+import { redirect } from "@remix-run/router";
 import { prisma } from "./prisma.server";
 
 export const createRecipe = async (recipe, userId) => {
@@ -10,6 +11,9 @@ export const createRecipe = async (recipe, userId) => {
   return newRecipe;
 };
 
+export const deleteRecipe = async (id) => {
+  await prisma.recipe.delete({ where: { id } });
+};
 export const getRecipes = async () => {
   try {
     const recipes = await prisma.recipe.findMany({
@@ -67,7 +71,6 @@ export const updateRecipe = async (recipe, recipeId) => {
     },
   });
 
-  console.log("New Recipe w/ links", updatedRecipe);
   return updatedRecipe;
 };
 
@@ -79,7 +82,11 @@ export const extractRecipe = (data) => {
   const qL = data.getAll("qty");
   const uL = data.getAll("unit");
   const links = data.getAll("linkBox");
-
+  const soloTest = data.get("freeSolo");
+  const recipeNameStr = data.get("recipeName");
+  const recipeName =
+    recipeNameStr.charAt(0).toUpperCase() + recipeNameStr.slice(1);
+  console.log("SOLO", soloTest);
   const linkedIngredients = iL.map((i) => {
     if (links[iL.indexOf(i)].length > 0) {
       return {
@@ -97,17 +104,9 @@ export const extractRecipe = (data) => {
     };
   });
 
-  const ingredients = iL.map((i) => {
-    return {
-      ingredient: i,
-      qty: qL[iL.indexOf(i)],
-      unit: uL[iL.indexOf(i)],
-    };
-  });
-
   const newRecipe = {
-    name: data.get("recipeName"),
-    category: data.get("category"),
+    name: recipeName,
+    category: soloTest,
     allergens: allergens,
     yield: { yieldQty: yq, yieldUnit: yu },
     ingredients: linkedIngredients,

@@ -1,4 +1,5 @@
 import {
+  Button,
   Chip,
   Container,
   Grid,
@@ -15,9 +16,11 @@ import {
   useNavigate,
   useNavigation,
   useLocation,
+  Link,
+  useSubmit,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
-import { MdClose, MdOutlineEditNote } from "react-icons/md";
+import { MdClose, MdDelete, MdOutlineEditNote } from "react-icons/md";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import ScaleFormDialog from "../../../Components/Menus/ScaleDialog";
@@ -28,12 +31,13 @@ import RecipeInstructions from "../../../Components/RecipeInstructions";
 
 import { getRecipeById, getRecipes } from "../../../utils/recipes.server";
 import LoadingComponent from "../../../Components/LoadingComponent";
+import { getUser } from "../../../utils/auth.server";
 
-export const loader = async ({ params }) => {
+export const loader = async ({ request, params }) => {
   const recipe = await getRecipeById(params.recipeId);
   const recipeList = await getRecipes();
-
-  return { recipe, recipeList };
+  const user = await getUser(request);
+  return { recipe, recipeList, user };
 };
 
 export function meta() {
@@ -44,21 +48,30 @@ export function meta() {
     "apple-mobile-web-app-status-bar-style": "default",
   };
 }
+
+export const ErrorBoundary = () => {
+  return (
+    <>
+      <Box>Sorry no recipe found</Box>
+      <Link to="/app/recipes">Go back to Recipe Page</Link>
+    </>
+  );
+};
 const Recipe = () => {
   const lastMessage = useRef({});
   const navigate = useNavigate();
   const data = useLoaderData() || lastMessage.current;
   const location = useLocation();
-  const { recipe, recipeList } = data;
+  const { recipe, recipeList, user } = data;
   const filteredList = recipeList.filter((r) => r.id !== recipe.id);
   const navigation = useNavigation();
   const action = `/app/editrecipe/${recipe.id}`;
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
-
+  const submit = useSubmit();
   useEffect(() => {
     if (navigation.state === "submitting") {
-      setOpen(!open);
+      setOpen(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
@@ -105,6 +118,7 @@ const Recipe = () => {
         <Box>
           <ScaleFormDialog scale={scale} setScale={setScale} />
         </Box>
+
         <Box>
           <IconButton onClick={() => setOpen(true)}>
             <MdOutlineEditNote />
@@ -142,8 +156,30 @@ const Recipe = () => {
       >
         <Container sx={{ my: "2rem" }} disableGutters>
           <Form action={action} method="post">
-            <RecipeForm recipe={recipe} recipeList={filteredList} />
+            <RecipeForm
+              recipe={recipe}
+              filteredList={filteredList}
+              recipeList={recipeList}
+            />
           </Form>
+          {recipe.author.username === user.username && (
+            <Box>
+              <Button
+                color="error"
+                fullWidth
+                sx={{ mt: "1em" }}
+                variant="outlined"
+                onClick={() =>
+                  submit(null, {
+                    method: "post",
+                    action: `/app/deleterecipe/${recipe.id}`,
+                  })
+                }
+              >
+                Delete Recipe?
+              </Button>
+            </Box>
+          )}
         </Container>
       </FullScreenDialog>
     </motion.div>

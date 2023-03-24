@@ -1,6 +1,12 @@
 import { Box, FormControl, MenuItem, Select, TextField } from "@mui/material";
 
-const SearchAndFilter = ({ setSearch, search, setCategory, category }) => {
+const SearchAndFilter = ({
+  setSearch,
+  search,
+  setCategory,
+  category,
+  categories,
+}) => {
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
@@ -28,17 +34,15 @@ const SearchAndFilter = ({ setSearch, search, setCategory, category }) => {
           displayEmpty
           onChange={handleChange}
         >
-          <MenuItem value={"All Recipes"}>All Recipes</MenuItem>
-          <MenuItem value={"Breads/Crackers/Wraps"}>
-            Breads/Crackers/Wraps
+          <MenuItem key={"All Recipes"} value={"All Recipes"}>
+            All Recipes
           </MenuItem>
-          <MenuItem value={"Spreads"}>Spreads</MenuItem>
-          <MenuItem value={"Raw & Cured"}>Raw & Cured</MenuItem>
-          <MenuItem value={"Land & Sea"}>Land & Sea</MenuItem>
-          <MenuItem value={"Vegetables"}>Vegetables</MenuItem>
-          <MenuItem value={"Spice Mix"}>Spice Mix</MenuItem>
-          <MenuItem value={"Dairy"}>Dairy</MenuItem>
-          <MenuItem value={"Pasta Dough"}>Pasta Dough</MenuItem>
+          {categories &&
+            categories.map((c) => (
+              <MenuItem key={c} value={c}>
+                {c}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </Box>
