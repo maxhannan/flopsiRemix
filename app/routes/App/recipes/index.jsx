@@ -1,4 +1,4 @@
-import { CircularProgress, Fab } from "@mui/material";
+import { Fab } from "@mui/material";
 import { useLoaderData, useLocation, useNavigation } from "@remix-run/react";
 import { useContext, useState } from "react";
 import { MdAdd } from "react-icons/md";
@@ -11,7 +11,7 @@ import AddRecipeContext from "../../../Context/RecipeAdderCtx";
 import { getRecipes } from "../../../utils/recipes.server";
 import LoadingComponent from "../../../Components/LoadingComponent";
 import { motion } from "framer-motion";
-import { v4 } from "uuid";
+
 export const loader = async () => {
   const recipes = await getRecipes();
   return recipes;

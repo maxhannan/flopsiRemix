@@ -20,7 +20,7 @@ import {
   useSubmit,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
-import { MdClose, MdDelete, MdOutlineEditNote } from "react-icons/md";
+import { MdClose, MdOutlineEditNote } from "react-icons/md";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
 import ScaleFormDialog from "../../../Components/Menus/ScaleDialog";

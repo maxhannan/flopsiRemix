@@ -1,7 +1,7 @@
-import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useNavigation } from "@remix-run/react";
-import { useState } from "react";
+
 import AllergensSelect from "./AllergensSelect";
 import CategorySelect from "./CategorySelect";
 import IngredientSection from "./IngredientSection";

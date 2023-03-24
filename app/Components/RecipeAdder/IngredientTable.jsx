@@ -6,7 +6,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Checkbox, TableHead } from "@mui/material";
 import { Link } from "@remix-run/react";
-import { Box } from "@mui/system";
 
 export default function NewIngredientTable({ rows, scale }) {
   if (rows) {
