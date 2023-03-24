@@ -17,15 +17,6 @@ import {
 } from "../../utils/validators.server";
 import { getUser, register } from "../../utils/auth.server";
 
-export function meta() {
-  return {
-    // <meta name="description" content="Welcome to the web!" />
-    "apple-mobile-web-app-capable": "yes",
-    // <meta name="theme-color" content="#f22" />
-    "apple-mobile-web-app-status-bar-style": "default",
-  };
-}
-
 export const loader = async ({ request }) => {
   // If there's already a user in the session, redirect to the home page
   return (await getUser(request)) ? redirect("/") : null;
