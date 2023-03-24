@@ -24,6 +24,14 @@ export function links() {
       rel: "stylesheet",
       href: "https://unpkg.com/modern-css-reset@1.4.0/dist/reset.min.css",
     },
+    {
+      rel: "manifest",
+      href: "/manifest.json",
+    },
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap",
+    },
   ];
 }
 
@@ -32,15 +40,8 @@ export default function App() {
     <html lang="en">
       <head>
         <Meta />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <link rel="manifest" href="/manifest.json" />
-        <Links />
 
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
+        <Links />
       </head>
       <body>
         <Outlet />

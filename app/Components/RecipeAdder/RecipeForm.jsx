@@ -9,7 +9,6 @@ import RecipeStepSection from "./RecipeStepSection";
 
 const RecipeForm = ({ recipe, recipeList, filteredList }) => {
   const navigation = useNavigation();
-  console.log(recipe, recipeList);
   const categories = [
     ...new Set(recipeList.map((item) => item.category)),
   ].filter((r) => r !== "All Recipes");
@@ -18,9 +17,8 @@ const RecipeForm = ({ recipe, recipeList, filteredList }) => {
     recipe && categories.filter((c) => c === recipe.category);
   const initValue =
     findCategory && findCategory.length > 0 ? findCategory : ["All Recipes"];
-
   categories.unshift("All Recipes");
-  const testOptions = categories.map((c) => ({ title: c }));
+  const categoryOptions = categories.map((c) => ({ title: c }));
 
   const recipeValues = recipe || {
     name: "",
@@ -45,7 +43,7 @@ const RecipeForm = ({ recipe, recipeList, filteredList }) => {
 
       <CategorySelect
         initValue={{ title: initValue[0] }}
-        categories={testOptions}
+        categories={categoryOptions}
       />
       <Box sx={{ display: "flex" }}>
         <TextField
