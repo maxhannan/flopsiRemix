@@ -78,6 +78,8 @@ const RecipeForm = ({ recipe, recipeList, filteredList }) => {
         variant="contained"
         disableElevation
         color="secondary"
+        name="_action"
+        value="update"
       >
         {navigation.state === "submitting" ? "Submitting..." : btnText}
       </Button>

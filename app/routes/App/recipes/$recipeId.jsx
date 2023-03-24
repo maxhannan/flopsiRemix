@@ -29,9 +29,16 @@ import NewIngredientTable from "../../../Components/RecipeAdder/IngredientTable"
 import RecipeForm from "../../../Components/RecipeAdder/RecipeForm";
 import RecipeInstructions from "../../../Components/RecipeInstructions";
 
-import { getRecipeById, getRecipes } from "../../../utils/recipes.server";
+import {
+  deleteRecipe,
+  extractRecipe,
+  getRecipeById,
+  getRecipes,
+  updateRecipe,
+} from "../../../utils/recipes.server";
 import LoadingComponent from "../../../Components/LoadingComponent";
 import { getUser } from "../../../utils/auth.server";
+import { json, redirect } from "@remix-run/node";
 
 export const loader = async ({ request, params }) => {
   const recipe = await getRecipeById(params.recipeId);
@@ -57,6 +64,27 @@ export const ErrorBoundary = () => {
     </>
   );
 };
+
+export const action = async ({ request, params }) => {
+  const data = await request.formData();
+
+  const action = data.get("_action");
+  console.log(action, "AC");
+  switch (action) {
+    case "update":
+      const newRecipe = extractRecipe(data);
+      const savedRecipe = await updateRecipe(newRecipe, params.recipeId);
+
+      return redirect(`/app/recipes/${savedRecipe.id}`);
+    case "delete":
+      console.log("ISIDE");
+      await deleteRecipe(params.recipeId);
+      return redirect("/app/recipes");
+    default:
+      return json({ error: `Invalid Form Data` }, { status: 400 });
+  }
+};
+
 const Recipe = () => {
   const lastMessage = useRef({});
   const navigate = useNavigate();
@@ -156,31 +184,28 @@ const Recipe = () => {
         handleClose={handleClose}
       >
         <Container sx={{ my: "2rem" }} disableGutters>
-          <Form action={action} method="post">
+          <Form method="post">
             <RecipeForm
               recipe={recipe}
               filteredList={filteredList}
               recipeList={recipeList}
             />
+            {recipe.author.username === user.username && (
+              <Box>
+                <Button
+                  color="error"
+                  fullWidth
+                  name="_action"
+                  value="delete"
+                  sx={{ mt: "1em" }}
+                  variant="outlined"
+                  type="submit"
+                >
+                  Delete Recipe?
+                </Button>
+              </Box>
+            )}
           </Form>
-          {recipe.author.username === user.username && (
-            <Box>
-              <Button
-                color="error"
-                fullWidth
-                sx={{ mt: "1em" }}
-                variant="outlined"
-                onClick={() =>
-                  submit(null, {
-                    method: "post",
-                    action: `/app/deleterecipe/${recipe.id}`,
-                  })
-                }
-              >
-                Delete Recipe?
-              </Button>
-            </Box>
-          )}
         </Container>
       </FullScreenDialog>
     </motion.div>
