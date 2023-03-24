@@ -1,4 +1,3 @@
-import { redirect } from "@remix-run/router";
 import { prisma } from "./prisma.server";
 
 export const createRecipe = async (recipe, userId) => {

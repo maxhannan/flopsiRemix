@@ -22,7 +22,7 @@ const App = () => {
       <Box>
         <NavBar />
         <Container
-          maxWidth="xl"
+          maxWidth="md"
           sx={{ paddingTop: "5em", paddingBottom: "7em", paddingX: "0" }}
         >
           <AnimatePresence mode="wait">

@@ -5,7 +5,6 @@ import { useState } from "react";
 const filter = createFilterOptions();
 
 export default function CategorySelect({ categories, initValue }) {
-  console.log(initValue, "INIT");
   const [value, setValue] = useState(initValue || null);
 
   const handleChange = (event, newValue) => {
@@ -72,9 +71,7 @@ export default function CategorySelect({ categories, initValue }) {
         }}
         renderOption={(props, option) => <li {...props}>{option.title}</li>}
         freeSolo
-        renderInput={(params) => (
-          <TextField {...params} label="Free solo with text demo" />
-        )}
+        renderInput={(params) => <TextField {...params} label="Category" />}
       />
     </>
   );
