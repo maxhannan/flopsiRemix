@@ -4,6 +4,7 @@ import {
   Container,
   Grid,
   IconButton,
+  Slide,
   Stack,
   Typography,
 } from "@mui/material";
@@ -17,7 +18,6 @@ import {
   useNavigation,
   useLocation,
   Link,
-  useSubmit,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import { MdClose, MdOutlineEditNote } from "react-icons/md";
@@ -89,6 +89,8 @@ const Recipe = () => {
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
   console.log(theme.palette.secondary);
+
+  const [slide, setSlide] = useState(false);
   useEffect(() => {
     if (navigation.state === "submitting") {
       setOpen(false);
@@ -99,6 +101,15 @@ const Recipe = () => {
   useEffect(() => {
     if (data) lastMessage.current = data;
   }, [data]);
+  useEffect(
+    () => {
+      setSlide(true);
+    },
+    [],
+    () => {
+      setSlide(false);
+    }
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -111,67 +122,65 @@ const Recipe = () => {
     return <LoadingComponent />;
   }
   return (
-    <motion.div
-      key={location.pathname}
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.25 }}
-    >
-      <Box sx={{ display: "flex", mb: ".25rem" }}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Stack spacing={0}>
-            <Typography variant="overline" color="secondary">
-              {recipe.author.profile.firstName +
-                " " +
-                recipe.author.profile.lastName}
-            </Typography>
-            <Typography variant="h5" color={theme.palette.text.primary}>
-              {recipe.name}
-            </Typography>
-            <Typography color="secondary" variant="overline">
-              {recipe.category}
-            </Typography>
-            <Typography variant="overline" color={theme.palette.text.primary}>
-              Yields:{" "}
-              {recipe.yield.yieldQty * scale + " " + recipe.yield.yieldUnit}
-            </Typography>
-          </Stack>
-        </Box>
-
-        <Box>
-          <ScaleFormDialog scale={scale} setScale={setScale} />
-        </Box>
-
-        <Box>
-          <IconButton onClick={() => setOpen(true)}>
-            <MdOutlineEditNote />
-          </IconButton>
-        </Box>
-        <Box>
-          <IconButton onClick={() => navigate(-1)}>
-            <MdClose />
-          </IconButton>
-        </Box>
-      </Box>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={12} md={12}>
-          <NewIngredientTable rows={recipe.ingredients} scale={scale} />
-          <Box>
-            {recipe.allergens[0] &&
-              recipe.allergens.map((a) => (
-                <Chip
-                  sx={{ mr: ".25rem", mt: "1rem", fontSize: "1rem" }}
-                  color="secondary"
-                  size="lg"
-                  key={a}
-                  label={a}
-                />
-              ))}
+    <>
+      <Slide direction="up" in={slide} mountOnEnter unmountOnExit>
+        <Box sx={{ display: "flex", mb: ".25rem" }}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Stack spacing={0}>
+              <Typography variant="overline" color="secondary">
+                {recipe.author.profile.firstName +
+                  " " +
+                  recipe.author.profile.lastName}
+              </Typography>
+              <Typography variant="h5" color={theme.palette.text.primary}>
+                {recipe.name}
+              </Typography>
+              <Typography color="secondary" variant="overline">
+                {recipe.category}
+              </Typography>
+              <Typography variant="overline" color={theme.palette.text.primary}>
+                Yields:{" "}
+                {recipe.yield.yieldQty * scale + " " + recipe.yield.yieldUnit}
+              </Typography>
+            </Stack>
           </Box>
-        </Grid>
-        <RecipeInstructions instructions={recipe.steps} />
-      </Grid>
 
+          <Box>
+            <ScaleFormDialog scale={scale} setScale={setScale} />
+          </Box>
+
+          <Box>
+            <IconButton onClick={() => setOpen(true)}>
+              <MdOutlineEditNote />
+            </IconButton>
+          </Box>
+          <Box>
+            <IconButton onClick={() => navigate(-1)}>
+              <MdClose />
+            </IconButton>
+          </Box>
+        </Box>
+      </Slide>
+      <Slide direction="up" in={slide} mountOnEnter unmountOnExit>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={12} md={12}>
+            <NewIngredientTable rows={recipe.ingredients} scale={scale} />
+            <Box>
+              {recipe.allergens[0] &&
+                recipe.allergens.map((a) => (
+                  <Chip
+                    sx={{ mr: ".25rem", mt: "1rem", fontSize: "1rem" }}
+                    color="secondary"
+                    size="lg"
+                    key={a}
+                    label={a}
+                  />
+                ))}
+            </Box>
+          </Grid>
+          <RecipeInstructions instructions={recipe.steps} />
+        </Grid>
+      </Slide>
       <FullScreenDialog
         title={"Edit Recipe"}
         open={open}
@@ -203,7 +212,7 @@ const Recipe = () => {
           </Form>
         </Container>
       </FullScreenDialog>
-    </motion.div>
+    </>
   );
 };
 

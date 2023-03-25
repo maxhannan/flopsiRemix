@@ -1,6 +1,6 @@
-import { Fab } from "@mui/material";
+import { Fab, Slide, Zoom } from "@mui/material";
 import { useLoaderData, useLocation, useNavigation } from "@remix-run/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";
@@ -17,6 +17,7 @@ import LoadingComponent from "../../../Components/LoadingComponent";
 import { motion } from "framer-motion";
 import { getUser } from "../../../utils/auth.server";
 import { redirect } from "@remix-run/node";
+import { Box } from "@mui/system";
 
 export const loader = async () => {
   const recipes = await getRecipes();
@@ -34,7 +35,6 @@ export const action = async ({ request }) => {
 const RecipeIndex = () => {
   const { open, handleClickOpen, handleCloseDialog } =
     useContext(AddRecipeContext);
-  const location = useLocation();
 
   const recipes = useLoaderData();
   const categories =
@@ -45,51 +45,60 @@ const RecipeIndex = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Recipes");
+  const [appear, setAppear] = useState(false);
+  useEffect(
+    () => {
+      setAppear(true);
+    },
+    [],
+    () => {
+      setAppear(false);
+    }
+  );
 
   if (navigation.state === "loading") {
     return <LoadingComponent />;
   }
 
   return (
-    <motion.div
-      key={location.pathname}
-      initial={{ opacity: 0, y: -100 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <SearchAndFilter
-        search={search}
-        setSearch={setSearch}
-        categories={categories}
-        category={category}
-        setCategory={setCategory}
-      />
-      {recipes && (
-        <RecipeFeed recipes={recipes} search={search} category={category} />
-      )}
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        <Fab
-          sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
-          size="large"
-          color="secondary"
-          onClick={handleClickOpen}
+    <Slide direction="down" appear in mountOnEnter unmountOnExit>
+      <Box>
+        <SearchAndFilter
+          search={search}
+          setSearch={setSearch}
+          categories={categories}
+          category={category}
+          setCategory={setCategory}
+        />
+        {recipes && (
+          <RecipeFeed recipes={recipes} search={search} category={category} />
+        )}
+        <Zoom
+          appear
+          in
+          mountOnEnter
+          unmountOnExit
+          style={{ transitionDelay: "500ms" }}
         >
-          <MdAdd size="2rem" />
-        </Fab>
-      </motion.div>
-      <FullScreenDialog
-        title={"Add Recipe"}
-        open={open}
-        handleClickOpen={handleClickOpen}
-        handleClose={handleCloseDialog}
-      >
-        <RecipeAdder recipeList={recipes} />
-      </FullScreenDialog>
-    </motion.div>
+          <Fab
+            sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
+            size="large"
+            color="secondary"
+            onClick={handleClickOpen}
+          >
+            <MdAdd size="2rem" />
+          </Fab>
+        </Zoom>
+        <FullScreenDialog
+          title={"Add Recipe"}
+          open={open}
+          handleClickOpen={handleClickOpen}
+          handleClose={handleCloseDialog}
+        >
+          <RecipeAdder recipeList={recipes} />
+        </FullScreenDialog>
+      </Box>
+    </Slide>
   );
 };
 

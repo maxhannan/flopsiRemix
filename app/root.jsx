@@ -28,6 +28,7 @@ export function links() {
     {
       rel: "manifest",
       href: "/manifest.json",
+      id: "manifest-placeholder",
     },
     {
       rel: "stylesheet",
