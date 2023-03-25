@@ -98,19 +98,6 @@ const Recipe = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
 
-  useEffect(() => {
-    if (data) lastMessage.current = data;
-  }, [data]);
-  useEffect(
-    () => {
-      setSlide(true);
-    },
-    [],
-    () => {
-      setSlide(false);
-    }
-  );
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -123,7 +110,7 @@ const Recipe = () => {
   }
   return (
     <>
-      <Slide direction="up" in={slide} mountOnEnter unmountOnExit>
+      <Slide appear in mountOnEnter unmountOnExit>
         <Box sx={{ display: "flex", mb: ".25rem" }}>
           <Box sx={{ flexGrow: 1 }}>
             <Stack spacing={0}>
@@ -161,7 +148,7 @@ const Recipe = () => {
           </Box>
         </Box>
       </Slide>
-      <Slide direction="up" in={slide} mountOnEnter unmountOnExit>
+      <Slide direction="up" appear in mountOnEnter unmountOnExit>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={12}>
             <NewIngredientTable rows={recipe.ingredients} scale={scale} />
