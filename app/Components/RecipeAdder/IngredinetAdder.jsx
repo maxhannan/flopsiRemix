@@ -39,7 +39,7 @@ const IngredientAdder = ({
           multiline
           sx={{ flex: "3", mr: ".5em" }}
           label="Ingredient Name"
-          color={linkRecipeValue && "success"}
+          color={linkRecipeValue && "secondary"}
           focused={linkRecipeValue ? true : false}
           value={ingredientObj.ingredient}
           name="ingredient"

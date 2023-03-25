@@ -14,7 +14,7 @@ const RecipeSummary = ({ recipe }) => {
         <CardHeader
           avatar={
             <Avatar
-              sx={{ bgcolor: theme.palette.secondary.light }}
+              sx={{ bgcolor: theme.palette.secondary.main }}
               aria-label="recipe"
             >
               {recipe.author.profile.firstName[0].toLowerCase() +

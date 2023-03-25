@@ -8,6 +8,8 @@ import Slide from "@mui/material/Slide";
 import { MdClose } from "react-icons/md";
 import { Container } from "@mui/system";
 import { forwardRef } from "react";
+import { useTheme } from "@mui/material";
+import { purple } from "@mui/material/colors";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,6 +21,8 @@ export default function FullScreenDialog({
   handleClose,
   children,
 }) {
+  const theme = useTheme();
+
   return (
     <div>
       <Dialog
@@ -27,7 +31,13 @@ export default function FullScreenDialog({
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar color="secondary" elevation={0} sx={{ position: "relative" }}>
+        <AppBar
+          elevation={0}
+          sx={{
+            position: "relative",
+            bgcolor: theme.palette.recipeFormDialog.default,
+          }}
+        >
           <Toolbar>
             <IconButton
               edge="start"

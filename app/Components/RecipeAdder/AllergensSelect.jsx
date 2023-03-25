@@ -74,7 +74,7 @@ export default function AllergensSelect({ allergenList }) {
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip color="error" key={value} label={value} />
+                <Chip color="secondary" key={value} label={value} />
               ))}
             </Box>
           )}

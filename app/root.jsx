@@ -1,5 +1,5 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { blue, grey } from "@mui/material/colors";
+import { blue, grey, purple } from "@mui/material/colors";
 import {
   Links,
   LiveReload,
@@ -254,18 +254,30 @@ export function CatchBoundary() {
 }
 
 export const AppForProvider = () => {
-  const mode = useColorMode()[0];
-
+  const [mode, _] = useColorMode();
+  console.log();
   const theme = createTheme({
     typography: {
       fontFamily: "Open Sans",
     },
     palette: {
-      secondary: {
-        main: blue[700],
-      },
       background: {
         default: mode === "dark" ? grey[900] : "#ffffff",
+      },
+      primary: {
+        light: "#757ce8",
+        main: "#3f50b5",
+        dark: "#002884",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#757ce8",
+        main: "#3f50b5",
+        dark: "#002884",
+        contrastText: "#fff",
+      },
+      recipeFormDialog: {
+        default: mode === "dark" ? grey[900] : "#002884",
       },
       mode: mode,
     },

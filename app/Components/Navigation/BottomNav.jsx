@@ -5,19 +5,16 @@ import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { purple } from "@mui/material/colors";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import { useLocation, Link } from "@remix-run/react";
-import { useTheme } from "@emotion/react";
-
-const NavBtn = styled(BottomNavigationAction)(`
-
-`);
+import { useColorMode } from "../../utils/themeCtx";
 
 const BottomNav = () => {
   const location = useLocation();
   const theme = useTheme();
+  const [colorMode, _] = useColorMode();
   const [value, setValue] = useState(location.pathname.split("/")[2]);
-
+  console.log(theme.palette.secondary);
   useEffect(() => {
     setValue(location.pathname.split("/")[2]);
   }, [location]);
@@ -25,6 +22,11 @@ const BottomNav = () => {
   const handleClick = (path) => {
     setValue(path);
   };
+  const NavBtn = styled(BottomNavigationAction)(`
+&.Mui-selected {
+  color: ${theme.palette.secondary.main};
+}
+`);
 
   return (
     <Paper

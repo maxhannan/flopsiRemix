@@ -88,7 +88,7 @@ const Recipe = () => {
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
-
+  console.log(theme.palette.secondary);
   useEffect(() => {
     if (navigation.state === "submitting") {
       setOpen(false);
@@ -120,7 +120,7 @@ const Recipe = () => {
       <Box sx={{ display: "flex", mb: ".25rem" }}>
         <Box sx={{ flexGrow: 1 }}>
           <Stack spacing={0}>
-            <Typography variant="overline" color="primary">
+            <Typography variant="overline" color="secondary">
               {recipe.author.profile.firstName +
                 " " +
                 recipe.author.profile.lastName}
@@ -128,7 +128,7 @@ const Recipe = () => {
             <Typography variant="h5" color={theme.palette.text.primary}>
               {recipe.name}
             </Typography>
-            <Typography color="primary" variant="overline">
+            <Typography color="secondary" variant="overline">
               {recipe.category}
             </Typography>
             <Typography variant="overline" color={theme.palette.text.primary}>
@@ -160,8 +160,9 @@ const Recipe = () => {
             {recipe.allergens[0] &&
               recipe.allergens.map((a) => (
                 <Chip
-                  sx={{ mr: ".25rem", mt: "1rem" }}
-                  color="error"
+                  sx={{ mr: ".25rem", mt: "1rem", fontSize: "1rem" }}
+                  color="secondary"
+                  size="lg"
                   key={a}
                   label={a}
                 />
