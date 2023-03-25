@@ -6,7 +6,7 @@ import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { purple } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import { useLocation, useNavigate } from "@remix-run/react";
+import { useLocation, Link } from "@remix-run/react";
 
 const NavBtn = styled(BottomNavigationAction)(`
   &.Mui-selected {
@@ -16,7 +16,6 @@ const NavBtn = styled(BottomNavigationAction)(`
 
 const BottomNav = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const [value, setValue] = useState(location.pathname.split("/")[2]);
 
@@ -26,7 +25,6 @@ const BottomNav = () => {
 
   const handleClick = (path) => {
     setValue(path);
-    navigate(`/app/${path}`);
   };
 
   return (
@@ -41,18 +39,24 @@ const BottomNav = () => {
         <NavBtn
           label="Prep"
           value="prep"
+          component={Link}
+          to="/app/prep"
           onClick={() => handleClick("prep")}
           icon={<RiFileList3Line size="2rem" />}
         />
         <NavBtn
           label="Recipes"
           value="recipes"
+          component={Link}
+          to="/app/recipes"
           onClick={() => handleClick("recipes")}
           icon={<GiForkKnifeSpoon size="2rem" />}
         />
         <NavBtn
           label="Convert"
           value="convert"
+          component={Link}
+          to="/app/convert"
           onClick={() => handleClick("convert")}
           icon={<TbMath size="2rem" />}
         />
