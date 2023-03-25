@@ -8,13 +8,28 @@ import RecipeAdder from "../../../Components/RecipeAdder/RecipeAdder";
 import SearchAndFilter from "../../../Components/RecipesSections/Components/SearchAndFilter";
 import RecipeFeed from "../../../Components/RecipesSections/RecipeFeed";
 import AddRecipeContext from "../../../Context/RecipeAdderCtx";
-import { getRecipes } from "../../../utils/recipes.server";
+import {
+  createRecipe,
+  extractRecipe,
+  getRecipes,
+} from "../../../utils/recipes.server";
 import LoadingComponent from "../../../Components/LoadingComponent";
 import { motion } from "framer-motion";
+import { getUser } from "../../../utils/auth.server";
+import { redirect } from "@remix-run/node";
 
 export const loader = async () => {
   const recipes = await getRecipes();
   return recipes;
+};
+
+export const action = async ({ request }) => {
+  const user = await getUser(request);
+  const data = await request.formData();
+  const newRecipe = extractRecipe(data);
+  const savedRecipe = await createRecipe(newRecipe, user.id);
+
+  return redirect(`/app/recipes/${savedRecipe.id}`);
 };
 const RecipeIndex = () => {
   const { open, handleClickOpen, handleCloseDialog } =

@@ -17,7 +17,7 @@ const RecipeAdder = ({ recipeList }) => {
 
   return (
     <Container sx={{ my: "2rem" }} disableGutters>
-      <Form action="/app/submitrecipe" method="post">
+      <Form method="post">
         <RecipeForm recipeList={recipeList} />
       </Form>
     </Container>

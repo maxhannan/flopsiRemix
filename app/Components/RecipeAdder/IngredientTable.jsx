@@ -4,13 +4,20 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Checkbox, TableHead } from "@mui/material";
+import { Checkbox, TableHead, Typography } from "@mui/material";
 import { Link } from "@remix-run/react";
+import { useTheme } from "@emotion/react";
 
 export default function NewIngredientTable({ rows, scale }) {
+  const theme = useTheme();
+  console.log(theme.palette.secondary);
   if (rows) {
     return (
-      <TableContainer component={Paper} variant="outlined">
+      <TableContainer
+        sx={{ bgcolor: "background.default" }}
+        component={Paper}
+        variant="outlined"
+      >
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -44,9 +51,13 @@ export default function NewIngredientTable({ rows, scale }) {
                     scope="row"
                   >
                     {row.linkId ? (
-                      <Link to={`/app/recipes/${row.linkId}`}>
+                      <Typography
+                        component={Link}
+                        to={`/app/recipes/${row.linkId}`}
+                        color="secondary"
+                      >
                         {row.ingredient}
-                      </Link>
+                      </Typography>
                     ) : (
                       row.ingredient
                     )}

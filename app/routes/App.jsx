@@ -1,4 +1,5 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, createTheme, ThemeProvider } from "@mui/material";
+import { blue, green, grey, purple } from "@mui/material/colors";
 import { useLocation, useOutlet } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -19,13 +20,22 @@ const App = () => {
   const location = useLocation();
   return (
     <AddRecipeContextProvider>
-      <Box>
+      <Box
+        sx={{
+          m: "0",
+          w: "100%",
+        }}
+      >
         <NavBar />
         <Container
           maxWidth="md"
-          sx={{ paddingTop: "5em", paddingBottom: "7em", paddingX: "0" }}
+          sx={{
+            paddingTop: "5em",
+            paddingBottom: "7em",
+            paddingX: "0",
+          }}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.main key={location.pathname}>{outlet}</motion.main>
           </AnimatePresence>
 

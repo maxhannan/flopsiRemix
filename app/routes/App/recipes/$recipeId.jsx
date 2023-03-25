@@ -39,6 +39,7 @@ import {
 import LoadingComponent from "../../../Components/LoadingComponent";
 import { getUser } from "../../../utils/auth.server";
 import { json, redirect } from "@remix-run/node";
+import { useTheme } from "@emotion/react";
 
 export const loader = async ({ request, params }) => {
   const recipe = await getRecipeById(params.recipeId);
@@ -77,6 +78,7 @@ export const action = async ({ request, params }) => {
 };
 
 const Recipe = () => {
+  const theme = useTheme();
   const lastMessage = useRef({});
   const navigate = useNavigate();
   const data = useLoaderData() || lastMessage.current;
@@ -84,10 +86,9 @@ const Recipe = () => {
   const { recipe, recipeList, user } = data;
   const filteredList = recipeList.filter((r) => r.id !== recipe.id);
   const navigation = useNavigation();
-  const action = `/app/editrecipe/${recipe.id}`;
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
-  const submit = useSubmit();
+
   useEffect(() => {
     if (navigation.state === "submitting") {
       setOpen(false);
@@ -119,16 +120,18 @@ const Recipe = () => {
       <Box sx={{ display: "flex", mb: ".25rem" }}>
         <Box sx={{ flexGrow: 1 }}>
           <Stack spacing={0}>
-            <Typography variant="overline">
+            <Typography variant="overline" color="primary">
               {recipe.author.profile.firstName +
                 " " +
                 recipe.author.profile.lastName}
             </Typography>
-            <Typography variant="h5">{recipe.name}</Typography>
-            <Typography color="secondary" variant="overline">
+            <Typography variant="h5" color={theme.palette.text.primary}>
+              {recipe.name}
+            </Typography>
+            <Typography color="primary" variant="overline">
               {recipe.category}
             </Typography>
-            <Typography variant="overline">
+            <Typography variant="overline" color={theme.palette.text.primary}>
               Yields:{" "}
               {recipe.yield.yieldQty * scale + " " + recipe.yield.yieldUnit}
             </Typography>

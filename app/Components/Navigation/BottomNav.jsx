@@ -7,16 +7,15 @@ import { useEffect, useState } from "react";
 import { purple } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { useLocation, Link } from "@remix-run/react";
+import { useTheme } from "@emotion/react";
 
 const NavBtn = styled(BottomNavigationAction)(`
-  &.Mui-selected {
-    color: ${purple[400]};
-  }
+
 `);
 
 const BottomNav = () => {
   const location = useLocation();
-
+  const theme = useTheme();
   const [value, setValue] = useState(location.pathname.split("/")[2]);
 
   useEffect(() => {
@@ -34,7 +33,12 @@ const BottomNav = () => {
     >
       <BottomNavigation
         value={value}
-        sx={{ borderTop: 1, borderColor: "#c2c2c2", height: "6rem" }}
+        sx={{
+          borderTop: 1,
+          borderColor: "#c2c2c2",
+          height: "6rem",
+          bgcolor: theme.palette.background.default,
+        }}
       >
         <NavBtn
           label="Prep"

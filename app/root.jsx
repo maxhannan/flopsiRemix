@@ -1,3 +1,5 @@
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { blue, grey } from "@mui/material/colors";
 import {
   Links,
   LiveReload,
@@ -7,6 +9,7 @@ import {
   ScrollRestoration,
   useCatch,
 } from "@remix-run/react";
+import { ColorModeProvider, useColorMode } from "./utils/themeCtx";
 
 export const meta = () => ({
   charset: "utf-8",
@@ -23,16 +26,24 @@ export const meta = () => ({
 export function links() {
   return [
     {
-      rel: "stylesheet",
-      href: "https://unpkg.com/modern-css-reset@1.4.0/dist/reset.min.css",
-    },
-    {
       rel: "manifest",
       href: "/manifest.json",
     },
     {
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.googleapis.com",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+    },
+    {
+      href: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap",
+      rel: "stylesheet",
     },
   ];
 }
@@ -214,12 +225,10 @@ export default function App() {
           href="/splash_screens/8.3__iPad_Mini_portrait.png"
         />
       </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
+      <CssBaseline />
+      <ColorModeProvider>
+        <AppForProvider />
+      </ColorModeProvider>
     </html>
   );
 }
@@ -233,6 +242,7 @@ export function CatchBoundary() {
 
         <Links />
       </head>
+
       <body>
         <h1>
           {caught.status} {caught.statusText}
@@ -242,3 +252,32 @@ export function CatchBoundary() {
     </html>
   );
 }
+
+export const AppForProvider = () => {
+  const mode = useColorMode()[0];
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Open Sans",
+    },
+    palette: {
+      secondary: {
+        main: blue[700],
+      },
+      background: {
+        default: mode === "dark" ? grey[900] : "#ffffff",
+      },
+      mode: mode,
+    },
+  });
+  return (
+    <ThemeProvider theme={theme}>
+      <body style={{ backgroundColor: theme.palette.background.default }}>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </ThemeProvider>
+  );
+};

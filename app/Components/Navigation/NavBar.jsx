@@ -2,16 +2,18 @@ import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { MdLogout } from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdLogout } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
 
 import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import { Box } from "@mui/system";
+import { useColorMode } from "../../utils/themeCtx";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [theme, setTheme] = useColorMode();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useLoaderData();
@@ -22,11 +24,23 @@ const NavBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleThemeChange = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
   return (
     <AppBar
       position="fixed"
       elevation={0}
-      sx={{ bgcolor: "#ffffff", borderBottom: 1, borderColor: "#c2c2c2" }}
+      sx={{
+        bgcolor: "background.default",
+        borderBottom: 1,
+        borderColor: "#c2c2c2",
+      }}
     >
       <Toolbar>
         <Typography
@@ -39,6 +53,14 @@ const NavBar = () => {
         </Typography>
         <Box sx={{ dsiplay: "flex" }}>
           <Form action="/auth/logout" method="post">
+            <IconButton
+              variant="outlined"
+              size="large"
+              color="secondary"
+              onClick={handleThemeChange}
+            >
+              {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
+            </IconButton>
             <IconButton
               variant="outlined"
               size="large"
@@ -56,8 +78,8 @@ const NavBar = () => {
                   cb: () => navigate("/app/profile"),
                 },
                 {
-                  name: "Logout",
-                  cb: () => console.log("logout"),
+                  name: "Theme",
+                  cb: handleThemeChange,
                 },
               ]}
             />

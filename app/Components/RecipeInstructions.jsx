@@ -5,7 +5,9 @@ const RecipeInstructions = ({ instructions }) => {
   return (
     <Grid item xs={12} sm={12} md={12}>
       <Box sx={{ width: "100%" }}>
-        <Typography variant="h4">Process</Typography>
+        <Typography color="text.primary" variant="h4">
+          Process
+        </Typography>
         <Divider sx={{ marginY: ".5rem" }} />
         <Stack spacing={2}>
           {instructions &&
@@ -15,7 +17,9 @@ const RecipeInstructions = ({ instructions }) => {
                   <Typography variant="h6" color="secondary">
                     Step {instructions.indexOf(i) + 1}
                   </Typography>
-                  <Typography variant="body1">{i}</Typography>
+                  <Typography color="text.primary" variant="body1">
+                    {i}
+                  </Typography>
                 </Box>
               );
             })}
