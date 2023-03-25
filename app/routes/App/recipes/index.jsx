@@ -31,8 +31,16 @@ const RecipeIndex = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Recipes");
 
+  if (navigation.state === "loading") {
+    return <LoadingComponent />;
+  }
+
   return (
-    <>
+    <motion.div
+      key={location.pathname}
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <SearchAndFilter
         search={search}
         setSearch={setSearch}
@@ -43,16 +51,21 @@ const RecipeIndex = () => {
       {recipes && (
         <RecipeFeed recipes={recipes} search={search} category={category} />
       )}
-
-      <Fab
-        sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
-        size="large"
-        color="secondary"
-        onClick={handleClickOpen}
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
       >
-        <MdAdd size="2rem" />
-      </Fab>
-
+        <Fab
+          sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
+          size="large"
+          color="secondary"
+          onClick={handleClickOpen}
+        >
+          <MdAdd size="2rem" />
+        </Fab>
+      </motion.div>
       <FullScreenDialog
         title={"Add Recipe"}
         open={open}
@@ -61,7 +74,7 @@ const RecipeIndex = () => {
       >
         <RecipeAdder recipeList={recipes} />
       </FullScreenDialog>
-    </>
+    </motion.div>
   );
 };
 

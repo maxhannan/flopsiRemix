@@ -110,7 +110,12 @@ const Recipe = () => {
     return <LoadingComponent />;
   }
   return (
-    <>
+    <motion.div
+      key={location.pathname}
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.25 }}
+    >
       <Box sx={{ display: "flex", mb: ".25rem" }}>
         <Box sx={{ flexGrow: 1 }}>
           <Stack spacing={0}>
@@ -194,7 +199,7 @@ const Recipe = () => {
           </Form>
         </Container>
       </FullScreenDialog>
-    </>
+    </motion.div>
   );
 };
 
