@@ -64,7 +64,7 @@ const Prep = () => {
                     sx: {
                       "& .MuiInputBase-input": {
                         height: ".9rem",
-                        maxWidth: "7rem",
+                        maxWidth: "12rem",
                       },
                     },
                   },
