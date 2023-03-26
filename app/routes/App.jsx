@@ -22,6 +22,7 @@ const App = () => {
           w: "100%",
         }}
       >
+        <NavBar />
         <Container
           maxWidth="md"
           sx={{
@@ -30,6 +31,7 @@ const App = () => {
         >
           <Outlet />
         </Container>
+        <BottomNav />
       </Box>
     </AddRecipeContextProvider>
   );

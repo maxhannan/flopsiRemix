@@ -2,6 +2,8 @@ import { useLocation, useNavigation } from "@remix-run/react";
 import LoadingComponent from "../../Components/LoadingComponent";
 import { motion } from "framer-motion";
 import { Typography } from "@mui/material";
+import BottomNav from "../../Components/Navigation/BottomNav";
+import { Box } from "@mui/system";
 const Prep = () => {
   const navigation = useNavigation();
   const location = useLocation();
@@ -10,13 +12,9 @@ const Prep = () => {
   }
 
   return (
-    <motion.div
-      key={location.pathname}
-      initial={{ opacity: 0, y: -100 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
+    <Box>
       <Typography variant="h5">Prep</Typography>
-    </motion.div>
+    </Box>
   );
 };
 
