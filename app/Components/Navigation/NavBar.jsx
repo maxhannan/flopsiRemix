@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 
 import { MdDarkMode, MdLightMode, MdLogout } from "react-icons/md";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
 

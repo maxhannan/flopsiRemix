@@ -105,120 +105,110 @@ const Recipe = () => {
     return <LoadingComponent />;
   }
   return (
-    <Box
-      sx={{
-        m: "0",
-        w: "100%",
-      }}
-    >
-      <Container maxWidth="md">
-        <Slide appear in mountOnEnter unmountOnExit>
-          <Box
-            sx={{
-              display: "flex",
-              mb: ".25rem",
-              paddingTop: "2rem",
-            }}
-          >
-            <Box sx={{ flexGrow: 1 }}>
-              <Stack spacing={0}>
-                <Typography variant="overline" color="secondary">
-                  {recipe.author.profile.firstName +
-                    " " +
-                    recipe.author.profile.lastName}
-                </Typography>
-                <Typography variant="h5" color={theme.palette.text.primary}>
-                  {recipe.name}
-                </Typography>
-                <Typography color="secondary" variant="overline">
-                  {recipe.category}
-                </Typography>
-                <Typography
-                  variant="overline"
-                  color={theme.palette.text.primary}
-                >
-                  Yields:{" "}
-                  {recipe.yield.yieldQty * scale + " " + recipe.yield.yieldUnit}
-                </Typography>
-              </Stack>
-            </Box>
-
-            <Box>
-              <ScaleFormDialog scale={scale} setScale={setScale} />
-            </Box>
-
-            <Box>
-              <IconButton onClick={() => setOpen(true)}>
-                <MdOutlineEditNote />
-              </IconButton>
-            </Box>
-            <Box>
-              <IconButton onClick={() => navigate(-1)}>
-                <MdClose />
-              </IconButton>
-            </Box>
+    <Container maxWidth="md">
+      <Slide appear in mountOnEnter unmountOnExit>
+        <Box
+          sx={{
+            display: "flex",
+            mb: ".25rem",
+            paddingTop: "2rem",
+          }}
+        >
+          <Box sx={{ flexGrow: 1 }}>
+            <Stack spacing={0}>
+              <Typography variant="overline" color="secondary">
+                {recipe.author.profile.firstName +
+                  " " +
+                  recipe.author.profile.lastName}
+              </Typography>
+              <Typography variant="h5" color={theme.palette.text.primary}>
+                {recipe.name}
+              </Typography>
+              <Typography color="secondary" variant="overline">
+                {recipe.category}
+              </Typography>
+              <Typography variant="overline" color={theme.palette.text.primary}>
+                Yields:{" "}
+                {recipe.yield.yieldQty * scale + " " + recipe.yield.yieldUnit}
+              </Typography>
+            </Stack>
           </Box>
-        </Slide>
-        <Slide
-          direction="up"
-          timeout={{ enter: 500 }}
-          appear
-          in
-          mountOnEnter
-          unmountOnExit
-        >
-          <Grid container spacing={3} sx={{ mb: "2rem" }}>
-            <Grid item xs={12} sm={12} md={12}>
-              <NewIngredientTable rows={recipe.ingredients} scale={scale} />
-              <Box>
-                {recipe.allergens[0] &&
-                  recipe.allergens.map((a) => (
-                    <Chip
-                      sx={{ mr: ".25rem", mt: "1rem", fontSize: "1rem" }}
-                      color="secondary"
-                      size="lg"
-                      key={a}
-                      label={a}
-                    />
-                  ))}
-              </Box>
-            </Grid>
-            <RecipeInstructions instructions={recipe.steps} />
+
+          <Box>
+            <ScaleFormDialog scale={scale} setScale={setScale} />
+          </Box>
+
+          <Box>
+            <IconButton onClick={() => setOpen(true)}>
+              <MdOutlineEditNote />
+            </IconButton>
+          </Box>
+          <Box>
+            <IconButton onClick={() => navigate(-1)}>
+              <MdClose />
+            </IconButton>
+          </Box>
+        </Box>
+      </Slide>
+      <Slide
+        direction="up"
+        timeout={{ enter: 500 }}
+        appear
+        in
+        mountOnEnter
+        unmountOnExit
+      >
+        <Grid container spacing={3} sx={{ mb: "2rem" }}>
+          <Grid item xs={12} sm={12} md={12}>
+            <NewIngredientTable rows={recipe.ingredients} scale={scale} />
+            <Box>
+              {recipe.allergens[0] &&
+                recipe.allergens.map((a) => (
+                  <Chip
+                    sx={{ mr: ".25rem", mt: "1rem", fontSize: "1rem" }}
+                    color="secondary"
+                    size="lg"
+                    key={a}
+                    label={a}
+                  />
+                ))}
+            </Box>
           </Grid>
-        </Slide>
-        <FullScreenDialog
-          title={"Edit Recipe"}
-          open={open}
-          handleClickOpen={handleClickOpen}
-          handleClose={handleClose}
-        >
-          <Container sx={{ my: "2rem" }} disableGutters>
-            <Form method="post">
-              <RecipeForm
-                recipe={recipe}
-                filteredList={filteredList}
-                recipeList={recipeList}
-              />
-              {recipe.author.username === user.username && (
-                <Box>
-                  <Button
-                    color="error"
-                    fullWidth
-                    name="_action"
-                    value="delete"
-                    sx={{ mt: "1em" }}
-                    variant="outlined"
-                    type="submit"
-                  >
-                    Delete Recipe?
-                  </Button>
-                </Box>
-              )}
-            </Form>
-          </Container>
-        </FullScreenDialog>
-      </Container>
-    </Box>
+          <RecipeInstructions instructions={recipe.steps} />
+        </Grid>
+      </Slide>
+      <FullScreenDialog
+        title={"Edit Recipe"}
+        open={open}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+      >
+        <Container sx={{ my: "2rem" }} disableGutters>
+          <Form method="post">
+            <RecipeForm
+              recipe={recipe}
+              filteredList={filteredList}
+              recipeList={recipeList}
+            />
+            {recipe.author.username === user.username && (
+              <Box>
+                <Button
+                  color="error"
+                  fullWidth
+                  name="_action"
+                  value="delete"
+                  sx={{ mt: "1em" }}
+                  variant="outlined"
+                  type="submit"
+                >
+                  Delete Recipe?
+                </Button>
+              </Box>
+            )}
+          </Form>
+        </Container>
+      </FullScreenDialog>
+    </Container>
   );
 };
 

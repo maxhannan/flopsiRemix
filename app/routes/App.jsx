@@ -24,7 +24,6 @@ const App = () => {
       >
         <NavBar />
         <Container
-          maxWidth="md"
           sx={{
             paddingX: "0",
           }}
