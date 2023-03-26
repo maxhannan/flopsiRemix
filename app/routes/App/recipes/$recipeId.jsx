@@ -8,7 +8,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { motion } from "framer-motion";
 
 import { Box } from "@mui/system";
 import {
@@ -16,7 +15,6 @@ import {
   Form,
   useNavigate,
   useNavigation,
-  useLocation,
   Link,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
@@ -82,15 +80,13 @@ const Recipe = () => {
   const lastMessage = useRef({});
   const navigate = useNavigate();
   const data = useLoaderData() || lastMessage.current;
-  const location = useLocation();
-  const { recipe, recipeList, user } = data;
-  const filteredList = recipeList.filter((r) => r.id !== recipe.id);
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
-  console.log(theme.palette.secondary);
 
-  const [slide, setSlide] = useState(false);
+  const { recipe, recipeList, user } = data;
+  const filteredList = recipeList.filter((r) => r.id !== recipe.id);
+
   useEffect(() => {
     if (navigation.state === "submitting") {
       setOpen(false);
@@ -150,7 +146,7 @@ const Recipe = () => {
       </Slide>
       <Slide
         direction="up"
-        timeout={{ enter: "400ms" }}
+        timeout={{ enter: 500 }}
         appear
         in
         mountOnEnter

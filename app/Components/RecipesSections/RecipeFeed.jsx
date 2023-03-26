@@ -1,9 +1,8 @@
-import { Slide, Typography, useTheme } from "@mui/material";
+import { Slide, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import RecipeSummary from "./Components/RecipeSummary";
 
 const RecipeFeed = ({ recipes, search, category }) => {
-  const theme = useTheme();
   const filterAndCategorize = (search, category) => {
     const categorizedRecipes =
       category === "All Recipes"
@@ -24,7 +23,7 @@ const RecipeFeed = ({ recipes, search, category }) => {
       in
       mountOnEnter
       unmountOnExit
-      timeout={{ enter: "400ms" }}
+      timeout={{ enter: 400 }}
     >
       <Stack spacing={1}>
         {recipeList.length > 0 ? (

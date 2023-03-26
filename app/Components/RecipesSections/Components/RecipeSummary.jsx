@@ -1,13 +1,6 @@
 import { useTheme } from "@emotion/react";
-import {
-  Avatar,
-  Box,
-  Card,
-  CardActionArea,
-  CardHeader,
-  Divider,
-} from "@mui/material";
-import { purple } from "@mui/material/colors";
+import { Avatar, Box, Card, CardActionArea, CardHeader } from "@mui/material";
+
 import { useNavigate } from "@remix-run/react";
 import { MdOutlineChevronRight } from "react-icons/md";
 
