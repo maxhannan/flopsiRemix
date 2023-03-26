@@ -1,9 +1,10 @@
-import { useNavigation } from "@remix-run/react";
+import { useLocation, useNavigation } from "@remix-run/react";
 import LoadingComponent from "../../Components/LoadingComponent";
 import { motion } from "framer-motion";
 import { Typography } from "@mui/material";
 const Prep = () => {
   const navigation = useNavigation();
+  const location = useLocation();
   if (navigation.state === "loading") {
     return <LoadingComponent />;
   }
