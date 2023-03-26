@@ -148,7 +148,14 @@ const Recipe = () => {
           </Box>
         </Box>
       </Slide>
-      <Slide direction="up" appear in mountOnEnter unmountOnExit>
+      <Slide
+        direction="up"
+        timeout={{ enter: "400ms" }}
+        appear
+        in
+        mountOnEnter
+        unmountOnExit
+      >
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={12}>
             <NewIngredientTable rows={recipe.ingredients} scale={scale} />

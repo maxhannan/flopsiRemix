@@ -1,5 +1,12 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Card, CardActionArea, CardHeader } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardActionArea,
+  CardHeader,
+  Divider,
+} from "@mui/material";
 import { purple } from "@mui/material/colors";
 import { useNavigate } from "@remix-run/react";
 import { MdOutlineChevronRight } from "react-icons/md";
@@ -11,21 +18,33 @@ const RecipeSummary = ({ recipe }) => {
   return (
     <Card variant="outlined" sx={{ bgcolor: "background.default" }}>
       <CardActionArea onClick={() => navigate(`/app/recipes/${recipe.id}`)}>
-        <CardHeader
-          avatar={
-            <Avatar
-              sx={{ bgcolor: theme.palette.secondary.main }}
-              aria-label="recipe"
-            >
-              {recipe.author.profile.firstName[0].toLowerCase() +
-                recipe.author.profile.lastName[0].toLowerCase()}
-            </Avatar>
-          }
-          action={<MdOutlineChevronRight />}
-          title={recipe.name}
-          subheader={recipe.category}
-          subheaderTypographyProps={{ color: "primary" }}
-        />
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignContent="center"
+          alignItems="center"
+        >
+          <CardHeader
+            avatar={
+              <Avatar
+                sx={{ bgcolor: theme.palette.secondary.main }}
+                aria-label="recipe"
+              >
+                {recipe.author.profile.firstName[0].toLowerCase() +
+                  recipe.author.profile.lastName[0].toLowerCase()}
+              </Avatar>
+            }
+            title={recipe.name}
+            subheader={recipe.category}
+            subheaderTypographyProps={{ color: "primary" }}
+          />
+          <Box>
+            <MdOutlineChevronRight
+              color={theme.palette.secondary.main}
+              size="2rem"
+            />
+          </Box>
+        </Box>
       </CardActionArea>
     </Card>
   );

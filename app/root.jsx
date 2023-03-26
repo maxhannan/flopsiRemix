@@ -272,7 +272,7 @@ export const AppForProvider = () => {
         main: mode === "dark" ? deepPurple[200] : deepPurple[600],
       },
       recipeFormDialog: {
-        default: mode === "dark" ? grey[900] : "#002884",
+        default: mode === "dark" ? deepPurple[200] : deepPurple[600],
       },
       mode: mode,
     },

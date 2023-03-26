@@ -1,4 +1,4 @@
-import { Fab, Slide, Stack, Zoom } from "@mui/material";
+import { Fab, Stack, Zoom } from "@mui/material";
 import { useLoaderData, useLocation, useNavigation } from "@remix-run/react";
 import { useContext, useEffect, useState } from "react";
 import { MdAdd } from "react-icons/md";
@@ -14,10 +14,9 @@ import {
   getRecipes,
 } from "../../../utils/recipes.server";
 import LoadingComponent from "../../../Components/LoadingComponent";
-import { motion } from "framer-motion";
+
 import { getUser } from "../../../utils/auth.server";
 import { redirect } from "@remix-run/node";
-import { Box } from "@mui/system";
 
 export const loader = async () => {
   const recipes = await getRecipes();
@@ -61,44 +60,44 @@ const RecipeIndex = () => {
   }
 
   return (
-    <Slide direction="down" appear in mountOnEnter unmountOnExit>
-      <Stack spacing={1}>
-        <SearchAndFilter
-          search={search}
-          setSearch={setSearch}
-          categories={categories}
-          category={category}
-          setCategory={setCategory}
-        />
-        {recipes && (
-          <RecipeFeed recipes={recipes} search={search} category={category} />
-        )}
-        <Zoom
-          appear
-          in
-          mountOnEnter
-          unmountOnExit
-          style={{ transitionDelay: "500ms" }}
+    <Stack spacing={1}>
+      <SearchAndFilter
+        search={search}
+        setSearch={setSearch}
+        categories={categories}
+        category={category}
+        setCategory={setCategory}
+      />
+
+      {recipes && (
+        <RecipeFeed recipes={recipes} search={search} category={category} />
+      )}
+
+      <Zoom
+        appear
+        in
+        mountOnEnter
+        unmountOnExit
+        style={{ transitionDelay: "500ms" }}
+      >
+        <Fab
+          sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
+          size="large"
+          color="secondary"
+          onClick={handleClickOpen}
         >
-          <Fab
-            sx={{ position: "fixed", bottom: "6.5rem", right: ".5rem" }}
-            size="large"
-            color="secondary"
-            onClick={handleClickOpen}
-          >
-            <MdAdd size="2rem" />
-          </Fab>
-        </Zoom>
-        <FullScreenDialog
-          title={"Add Recipe"}
-          open={open}
-          handleClickOpen={handleClickOpen}
-          handleClose={handleCloseDialog}
-        >
-          <RecipeAdder recipeList={recipes} />
-        </FullScreenDialog>
-      </Stack>
-    </Slide>
+          <MdAdd size="2rem" />
+        </Fab>
+      </Zoom>
+      <FullScreenDialog
+        title={"Add Recipe"}
+        open={open}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleCloseDialog}
+      >
+        <RecipeAdder recipeList={recipes} />
+      </FullScreenDialog>
+    </Stack>
   );
 };
 

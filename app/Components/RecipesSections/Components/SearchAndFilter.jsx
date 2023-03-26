@@ -3,6 +3,7 @@ import {
   FormControl,
   MenuItem,
   Select,
+  Slide,
   Stack,
   TextField,
 } from "@mui/material";
@@ -23,35 +24,37 @@ const SearchAndFilter = ({
   };
 
   return (
-    <Stack spacing={1}>
-      <TextField
-        fullWidth
-        color="secondary"
-        label="Search Recipes"
-        value={search}
-        onChange={handleSearchChange}
-      />
-      <FormControl>
-        <Select
+    <Slide direction="down" appear in mountOnEnter unmountOnExit>
+      <Stack spacing={1}>
+        <TextField
+          fullWidth
           color="secondary"
-          labelId="select"
-          id="select"
-          value={category}
-          displayEmpty
-          onChange={handleChange}
-        >
-          <MenuItem key={"All Recipes"} value={"All Recipes"}>
-            All Recipes
-          </MenuItem>
-          {categories &&
-            categories.map((c) => (
-              <MenuItem key={c} value={c}>
-                {c}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-    </Stack>
+          label="Search Recipes"
+          value={search}
+          onChange={handleSearchChange}
+        />
+        <FormControl>
+          <Select
+            color="secondary"
+            labelId="select"
+            id="select"
+            value={category}
+            displayEmpty
+            onChange={handleChange}
+          >
+            <MenuItem key={"All Recipes"} value={"All Recipes"}>
+              All Recipes
+            </MenuItem>
+            {categories &&
+              categories.map((c) => (
+                <MenuItem key={c} value={c}>
+                  {c}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+      </Stack>
+    </Slide>
   );
 };
 
