@@ -59,6 +59,15 @@ const Prep = () => {
               <MobileDatePicker
                 value={date}
                 onChange={(newValue) => setDate(newValue)}
+                slotProps={{
+                  textField: {
+                    sx: {
+                      "& .MuiInputBase-input": {
+                        maxWidth: "7rem",
+                      },
+                    },
+                  },
+                }}
               />
             </Box>
             {recipes && (
