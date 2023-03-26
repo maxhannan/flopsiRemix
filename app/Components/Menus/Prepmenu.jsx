@@ -110,7 +110,7 @@ export default function PrepMenu() {
         <Paper
           variant="outlined"
           sx={{
-            width: 370,
+            width: 470,
             maxWidth: "100%",
           }}
         >

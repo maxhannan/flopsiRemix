@@ -5,6 +5,7 @@ import {
   AppBar,
   Button,
   Container,
+  Fade,
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
@@ -17,12 +18,12 @@ import { MdCopyAll, MdPrint, MdSave, MdShare } from "react-icons/md";
 import PrepMenu from "../../Components/Menus/Prepmenu";
 import { getRecipes } from "../../utils/recipes.server";
 import RecipeFeed from "../../Components/RecipesSections/RecipeFeed";
-const actions = [
-  { icon: <MdCopyAll size="1.5em" />, name: "Copy" },
-  { icon: <MdSave size="1.5em" />, name: "Save" },
-  { icon: <MdPrint size="1.5em" />, name: "Print" },
-  { icon: <MdShare size="1.5em" />, name: "Share" },
-];
+import {
+  DatePicker,
+  LocalizationProvider,
+  MobileDatePicker,
+} from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export const loader = async () => {
   const recipes = await getRecipes();
@@ -39,18 +40,37 @@ const Prep = () => {
   }
 
   return (
-    <Container sx={{ mt: "4.5rem", mb: "10rem" }}>
-      <Stack spacing={2}>
-        <Box
-          sx={{ display: "flex", justifyContent: "flex-start", width: "100%" }}
-        >
-          <PrepMenu />
-        </Box>
-        {recipes && (
-          <RecipeFeed recipes={recipes} search={""} category={"All Recipes"} />
-        )}
-      </Stack>
-    </Container>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Fade appear in mountOnEnter unmountOnExit timeout={{ enter: 500 }}>
+        <Container sx={{ mt: "4.5rem", mb: "10rem" }}>
+          <Stack spacing={2}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <PrepMenu />
+              <MobileDatePicker
+                slotProps={{
+                  textField: {
+                    sx: { "& .MuiInputBase-input": { height: ".6rem" } },
+                  },
+                }}
+              />
+            </Box>
+            {recipes && (
+              <RecipeFeed
+                recipes={recipes}
+                search={""}
+                category={"All Recipes"}
+              />
+            )}
+          </Stack>
+        </Container>
+      </Fade>
+    </LocalizationProvider>
   );
 };
 
