@@ -63,7 +63,7 @@ const Prep = () => {
                   textField: {
                     sx: {
                       "& .MuiInputBase-input": {
-                        height: "1rem",
+                        height: ".95rem",
                         maxWidth: "7rem",
                       },
                     },
