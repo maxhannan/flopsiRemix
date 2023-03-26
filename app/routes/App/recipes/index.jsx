@@ -17,6 +17,8 @@ import LoadingComponent from "../../../Components/LoadingComponent";
 
 import { getUser } from "../../../utils/auth.server";
 import { redirect } from "@remix-run/node";
+import BottomNav from "../../../Components/Navigation/BottomNav";
+import NavBar from "../../../Components/Navigation/NavBar";
 
 export const loader = async () => {
   const recipes = await getRecipes();
@@ -50,8 +52,9 @@ const RecipeIndex = () => {
   }
 
   return (
-    <Fade appear in mountOnEnter unmountOnExit timeout={{ enter: 400 }}>
-      <Stack spacing={1}>
+    <Fade appear in mountOnEnter unmountOnExit timeout={{ enter: 500 }}>
+      <Stack spacing={1} sx={{ paddingTop: "4.5rem", paddingBottom: "7em" }}>
+        <NavBar />
         <SearchAndFilter
           search={search}
           setSearch={setSearch}
@@ -88,6 +91,7 @@ const RecipeIndex = () => {
         >
           <RecipeAdder recipeList={recipes} />
         </FullScreenDialog>
+        <BottomNav />
       </Stack>
     </Fade>
   );

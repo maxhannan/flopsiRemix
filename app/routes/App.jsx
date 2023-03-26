@@ -22,18 +22,13 @@ const App = () => {
           w: "100%",
         }}
       >
-        <NavBar />
         <Container
           maxWidth="md"
           sx={{
-            paddingTop: "4.5rem",
-            paddingBottom: "7em",
             paddingX: "0",
           }}
         >
           <Outlet />
-
-          <BottomNav />
         </Container>
       </Box>
     </AddRecipeContextProvider>

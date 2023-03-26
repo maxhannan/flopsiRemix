@@ -107,7 +107,13 @@ const Recipe = () => {
   return (
     <>
       <Slide appear in mountOnEnter unmountOnExit>
-        <Box sx={{ display: "flex", mb: ".25rem" }}>
+        <Box
+          sx={{
+            display: "flex",
+            mb: ".25rem",
+            paddingTop: "2rem",
+          }}
+        >
           <Box sx={{ flexGrow: 1 }}>
             <Stack spacing={0}>
               <Typography variant="overline" color="secondary">
@@ -152,7 +158,7 @@ const Recipe = () => {
         mountOnEnter
         unmountOnExit
       >
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ mb: "2rem" }}>
           <Grid item xs={12} sm={12} md={12}>
             <NewIngredientTable rows={recipe.ingredients} scale={scale} />
             <Box>

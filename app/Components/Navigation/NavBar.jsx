@@ -42,58 +42,50 @@ const NavBar = () => {
         borderColor: "#c2c2c2",
       }}
     >
-      <Toolbar>
-        <Typography
-          variant="h5"
-          component="div"
-          color="secondary"
-          sx={{ flexGrow: 1 }}
-        >
-          {user.username}
-        </Typography>
-        <Box sx={{ dsiplay: "flex" }}>
-          <Form action="/auth/logout" method="post">
-            <IconButton
-              variant="outlined"
-              size="large"
-              color="secondary"
-              onClick={handleThemeChange}
-            >
-              {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
-            </IconButton>
-            <IconButton
-              variant="outlined"
-              size="large"
-              color="secondary"
-              onClick={handleMenu}
-            >
-              <GiCook />
-            </IconButton>
-            <PopMenu
-              anchorEl={anchorEl}
-              handleClose={handleClose}
-              items={[
-                {
-                  name: "View Profile",
-                  cb: () => navigate("/app/profile"),
-                },
-                {
-                  name: "Theme",
-                  cb: handleThemeChange,
-                },
-              ]}
-            />
+      <Toolbar
+        sx={{ dsiplay: "flex", width: "100%", justifyContent: "flex-end" }}
+      >
+        <Form action="/auth/logout" method="post">
+          <IconButton
+            variant="outlined"
+            size="large"
+            color="secondary"
+            onClick={handleThemeChange}
+          >
+            {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
+          </IconButton>
+          <IconButton
+            variant="outlined"
+            size="large"
+            color="secondary"
+            onClick={handleMenu}
+          >
+            <GiCook />
+          </IconButton>
+          <PopMenu
+            anchorEl={anchorEl}
+            handleClose={handleClose}
+            items={[
+              {
+                name: "View Profile",
+                cb: () => navigate("/app/profile"),
+              },
+              {
+                name: "Theme",
+                cb: handleThemeChange,
+              },
+            ]}
+          />
 
-            <IconButton
-              variant="outlined"
-              size="large"
-              color="secondary"
-              type="submit"
-            >
-              <MdLogout />
-            </IconButton>
-          </Form>
-        </Box>
+          <IconButton
+            variant="outlined"
+            size="large"
+            color="secondary"
+            type="submit"
+          >
+            <MdLogout />
+          </IconButton>
+        </Form>
       </Toolbar>
     </AppBar>
   );
