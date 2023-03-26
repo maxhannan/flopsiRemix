@@ -1,14 +1,13 @@
 import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+
 import { MdDarkMode, MdLightMode, MdLogout } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
 
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
-import { Box } from "@mui/system";
+import { Form, useNavigate } from "@remix-run/react";
 import { useColorMode } from "../../utils/themeCtx";
 
 const NavBar = () => {
@@ -16,7 +15,6 @@ const NavBar = () => {
   const [theme, setTheme] = useColorMode();
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const user = useLoaderData();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);

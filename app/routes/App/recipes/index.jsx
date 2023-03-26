@@ -1,6 +1,6 @@
 import { Fab, Fade, Stack, Zoom } from "@mui/material";
 import { useLoaderData, useNavigation } from "@remix-run/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
 import FullScreenDialog from "../../../Components/Menus/FullScreenDialog";

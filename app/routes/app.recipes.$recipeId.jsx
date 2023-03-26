@@ -111,12 +111,7 @@ const Recipe = () => {
         w: "100%",
       }}
     >
-      <Container
-        maxWidth="md"
-        sx={{
-          paddingX: "0",
-        }}
-      >
+      <Container maxWidth="md">
         <Slide appear in mountOnEnter unmountOnExit>
           <Box
             sx={{

@@ -3,11 +3,10 @@ import { RiFileList3Line } from "react-icons/ri";
 import { TbMath } from "react-icons/tb";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 
-import { useEffect, useState } from "react";
-import { purple } from "@mui/material/colors";
-import { styled, useTheme } from "@mui/material/styles";
-import { useLocation, Link, useNavigate } from "@remix-run/react";
-import { useColorMode } from "../../utils/themeCtx";
+import { useState } from "react";
+
+import { useTheme } from "@mui/material/styles";
+import { useLocation, useNavigate } from "@remix-run/react";
 
 const BottomNav = () => {
   const location = useLocation();
