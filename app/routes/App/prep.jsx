@@ -31,7 +31,9 @@ const Prep = () => {
 
   return (
     <Container sx={{ mt: "4.5rem", py: "0" }}>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "flex-start", width: "100%" }}
+      >
         <PrepMenu />
       </Box>
       <SpeedDial

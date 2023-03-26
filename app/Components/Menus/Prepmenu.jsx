@@ -26,11 +26,11 @@ const StyledMenu = styled((props) => (
     elevation={0}
     anchorOrigin={{
       vertical: "bottom",
-      horizontal: "right",
+      horizontal: "left",
     }}
     transformOrigin={{
       vertical: "top",
-      horizontal: "right",
+      horizontal: "left",
     }}
     {...props}
   />
@@ -94,11 +94,11 @@ export default function PrepMenu() {
         elevation={0}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right",
+          horizontal: "left",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "left",
         }}
         anchorEl={anchorEl}
         open={open}
@@ -107,7 +107,7 @@ export default function PrepMenu() {
         <Paper
           variant="outlined"
           sx={{
-            width: 320,
+            width: 370,
             maxWidth: "100%",
           }}
         >
