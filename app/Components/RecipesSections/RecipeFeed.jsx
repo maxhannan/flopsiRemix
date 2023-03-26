@@ -17,7 +17,7 @@ const RecipeFeed = ({ recipes, search, category }) => {
   const recipeList = filterAndCategorize(search, category);
 
   return (
-    <Stack sx={{ mt: 2 }} spacing={1}>
+    <Stack spacing={1}>
       {recipeList.length > 0 ? (
         recipeList.map((r) => <RecipeSummary key={r.id} recipe={r} />)
       ) : (

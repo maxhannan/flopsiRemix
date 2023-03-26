@@ -1,4 +1,4 @@
-import { Fab, Slide, Zoom } from "@mui/material";
+import { Fab, Slide, Stack, Zoom } from "@mui/material";
 import { useLoaderData, useLocation, useNavigation } from "@remix-run/react";
 import { useContext, useEffect, useState } from "react";
 import { MdAdd } from "react-icons/md";
@@ -62,7 +62,7 @@ const RecipeIndex = () => {
 
   return (
     <Slide direction="down" appear in mountOnEnter unmountOnExit>
-      <Box>
+      <Stack spacing={1}>
         <SearchAndFilter
           search={search}
           setSearch={setSearch}
@@ -97,7 +97,7 @@ const RecipeIndex = () => {
         >
           <RecipeAdder recipeList={recipes} />
         </FullScreenDialog>
-      </Box>
+      </Stack>
     </Slide>
   );
 };

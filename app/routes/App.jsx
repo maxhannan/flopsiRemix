@@ -63,8 +63,9 @@ const App = () => {
       >
         <NavBar />
         <Container
+          maxWidth="md"
           sx={{
-            paddingTop: "5em",
+            paddingTop: "4.5rem",
             paddingBottom: "7em",
             paddingX: "0",
           }}

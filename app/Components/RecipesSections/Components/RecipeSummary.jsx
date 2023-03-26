@@ -24,6 +24,7 @@ const RecipeSummary = ({ recipe }) => {
           action={<MdOutlineChevronRight />}
           title={recipe.name}
           subheader={recipe.category}
+          subheaderTypographyProps={{ color: "primary" }}
         />
       </CardActionArea>
     </Card>

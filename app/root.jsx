@@ -1,5 +1,5 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { blue, grey, purple } from "@mui/material/colors";
+import { blue, deepPurple, green, grey, purple } from "@mui/material/colors";
 import {
   Links,
   LiveReload,
@@ -263,19 +263,13 @@ export const AppForProvider = () => {
     },
     palette: {
       background: {
-        default: mode === "dark" ? grey[900] : "#ffffff",
+        default: mode === "dark" ? "#303030" : "#ffffff",
       },
       primary: {
-        light: "#757ce8",
-        main: "#3f50b5",
-        dark: "#002884",
-        contrastText: "#fff",
+        main: mode === "dark" ? deepPurple[200] : deepPurple[600],
       },
       secondary: {
-        light: "#757ce8",
-        main: "#3f50b5",
-        dark: "#002884",
-        contrastText: "#fff",
+        main: mode === "dark" ? deepPurple[200] : deepPurple[600],
       },
       recipeFormDialog: {
         default: mode === "dark" ? grey[900] : "#002884",

@@ -1,4 +1,11 @@
-import { Box, FormControl, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
 
 const SearchAndFilter = ({
   setSearch,
@@ -16,16 +23,15 @@ const SearchAndFilter = ({
   };
 
   return (
-    <Box display="flex">
+    <Stack spacing={1}>
       <TextField
         fullWidth
         color="secondary"
         label="Search Recipes"
         value={search}
         onChange={handleSearchChange}
-        sx={{ width: "65%" }}
       />
-      <FormControl sx={{ width: "34%", marginLeft: "auto" }}>
+      <FormControl>
         <Select
           color="secondary"
           labelId="select"
@@ -45,7 +51,7 @@ const SearchAndFilter = ({
             ))}
         </Select>
       </FormControl>
-    </Box>
+    </Stack>
   );
 };
 
