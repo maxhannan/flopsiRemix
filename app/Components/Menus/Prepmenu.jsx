@@ -8,10 +8,13 @@ import { useState } from "react";
 import {
   MdArchive,
   MdContentCut,
+  MdDelete,
   MdEdit,
   MdFileCopy,
   MdKeyboardArrowDown,
+  MdList,
   MdMoreHoriz,
+  MdPages,
 } from "react-icons/md";
 import {
   ListItemIcon,
@@ -88,7 +91,7 @@ export default function PrepMenu() {
         onClick={handleClick}
         endIcon={<MdKeyboardArrowDown />}
       >
-        Add
+        Prep Lists
       </Button>
       <Menu
         elevation={0}
@@ -114,31 +117,23 @@ export default function PrepMenu() {
           <MenuList>
             <MenuItem>
               <ListItemIcon>
-                <MdContentCut fontSize="small" />
+                <MdPages />
               </ListItemIcon>
-              <ListItemText>Cut</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘X
-              </Typography>
+              <ListItemText>Create New Prep List</ListItemText>
+              <Typography variant="body2" color="text.secondary"></Typography>
             </MenuItem>
             <MenuItem>
               <ListItemIcon>
-                <MdContentCut fontSize="small" />
+                <MdEdit />
               </ListItemIcon>
-              <ListItemText>Cut</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘X
-              </Typography>
+              <ListItemText>Build New List Template</ListItemText>
             </MenuItem>
             <Divider />
             <MenuItem>
               <ListItemIcon>
-                <MdContentCut fontSize="small" />
+                <MdDelete />
               </ListItemIcon>
-              <ListItemText>Cut</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘X
-              </Typography>
+              <ListItemText>Delete Templates</ListItemText>
             </MenuItem>
           </MenuList>
         </Paper>
