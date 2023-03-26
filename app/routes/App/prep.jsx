@@ -24,6 +24,8 @@ import {
   MobileDatePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { useState } from "react";
 
 export const loader = async () => {
   const recipes = await getRecipes();
@@ -34,6 +36,8 @@ const Prep = () => {
   const navigation = useNavigation();
 
   const recipes = useLoaderData();
+
+  const [date, setDate] = useState(dayjs());
 
   if (navigation.state === "loading") {
     return <LoadingComponent />;
@@ -53,9 +57,16 @@ const Prep = () => {
             >
               <PrepMenu />
               <MobileDatePicker
+                value={date}
+                onChange={(newValue) => setDate(newValue)}
                 slotProps={{
                   textField: {
-                    sx: { "& .MuiInputBase-input": { height: ".6rem" } },
+                    sx: {
+                      "& .MuiInputBase-input": {
+                        height: ".6rem",
+                        maxWidth: "7rem",
+                      },
+                    },
                   },
                 }}
               />
