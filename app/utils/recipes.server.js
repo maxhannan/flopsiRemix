@@ -25,6 +25,7 @@ export const getRecipes = async () => {
         id: true,
         name: true,
         category: true,
+        createdAt: true,
         author: {
           select: {
             id: true,
