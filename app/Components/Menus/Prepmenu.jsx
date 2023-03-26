@@ -87,6 +87,7 @@ export default function PrepMenu() {
         aria-expanded={open ? "true" : undefined}
         variant="outlined"
         disableElevation
+        sx={{ maxHeight: "3rem", minHeight: "3rem" }}
         onClick={handleClick}
         endIcon={<MdKeyboardArrowDown />}
       >
