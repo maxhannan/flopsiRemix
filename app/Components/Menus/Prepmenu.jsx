@@ -1,4 +1,4 @@
-import { styled, alpha } from "@mui/material/styles";
+import { styled, alpha, useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,11 +7,19 @@ import Divider from "@mui/material/Divider";
 import { useState } from "react";
 import {
   MdArchive,
+  MdContentCut,
   MdEdit,
   MdFileCopy,
   MdKeyboardArrowDown,
   MdMoreHoriz,
 } from "react-icons/md";
+import {
+  ListItemIcon,
+  ListItemText,
+  MenuList,
+  Paper,
+  Typography,
+} from "@mui/material";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -44,7 +52,7 @@ const StyledMenu = styled((props) => (
       "& .MuiSvgIcon-root": {
         fontSize: 18,
         color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5),
+        marginRight: "40px",
       },
       "&:active": {
         backgroundColor: alpha(
@@ -57,6 +65,7 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function PrepMenu() {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -81,33 +90,59 @@ export default function PrepMenu() {
       >
         Add
       </Button>
-      <StyledMenu
-        id="demo-customized-menu"
-        MenuListProps={{
-          "aria-labelledby": "demo-customized-button",
+      <Menu
+        elevation={0}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
         }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
-          <MdEdit />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MdFileCopy />
-          Duplicate
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          <MdArchive />
-          Archive
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MdMoreHoriz />
-          More
-        </MenuItem>
-      </StyledMenu>
+        <Paper
+          variant="outlined"
+          sx={{
+            width: 320,
+            maxWidth: "100%",
+          }}
+        >
+          <MenuList>
+            <MenuItem>
+              <ListItemIcon>
+                <MdContentCut fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Cut</ListItemText>
+              <Typography variant="body2" color="text.secondary">
+                ⌘X
+              </Typography>
+            </MenuItem>
+            <MenuItem>
+              <ListItemIcon>
+                <MdContentCut fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Cut</ListItemText>
+              <Typography variant="body2" color="text.secondary">
+                ⌘X
+              </Typography>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemIcon>
+                <MdContentCut fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Cut</ListItemText>
+              <Typography variant="body2" color="text.secondary">
+                ⌘X
+              </Typography>
+            </MenuItem>
+          </MenuList>
+        </Paper>
+      </Menu>
     </div>
   );
 }

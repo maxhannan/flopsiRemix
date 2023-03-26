@@ -264,6 +264,7 @@ export const AppForProvider = () => {
     palette: {
       background: {
         default: mode === "dark" ? "#303030" : "#ffffff",
+        paper: mode === "dark" ? "#303030" : "#ffffff",
       },
       primary: {
         main: mode === "dark" ? deepPurple[200] : deepPurple[600],
