@@ -3,15 +3,35 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 
 import { MdDarkMode, MdLightMode, MdLogout } from "react-icons/md";
-import { Button, IconButton } from "@mui/material";
+import { Fade, IconButton, Typography } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import PopMenu from "../Menus/PopMenu";
 
-import { Form, useNavigate } from "@remix-run/react";
+import {
+  Form,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import { useColorMode } from "../../utils/themeCtx";
-import PrepMenu from "../Menus/Prepmenu";
 
 const NavBar = () => {
+  const location = useLocation();
+  console.log(location, "LOC");
+  const navigation = useNavigation();
+  const getPage = (location) => {
+    switch (location) {
+      case "/app/prep":
+        return "Prep";
+      case "/app/recipes":
+        return "Recipes";
+      case "/app/prep/templatecreator":
+        return "Template Creator";
+      default:
+        return "";
+    }
+  };
+  const page = getPage(location.pathname);
   const navigate = useNavigate();
   const [theme, setTheme] = useColorMode();
 
@@ -31,6 +51,7 @@ const NavBar = () => {
       setTheme("light");
     }
   };
+
   return (
     <AppBar
       position="fixed"
@@ -42,8 +63,16 @@ const NavBar = () => {
       }}
     >
       <Toolbar
-        sx={{ dsiplay: "flex", width: "100%", justifyContent: "flex-end" }}
+        sx={{ dsiplay: "flex", width: "100%", justifyContent: "space-between" }}
       >
+        <Fade appear in mountOnEnter unmountOnExit timeout={{ enter: 500 }}>
+          <Typography color="secondary" variant="h6">
+            {navigation.state === "loading" &&
+            !navigation.location.pathname.includes(location.pathname)
+              ? ""
+              : page}
+          </Typography>
+        </Fade>
         <Form action="/auth/logout" method="post">
           <IconButton
             variant="outlined"

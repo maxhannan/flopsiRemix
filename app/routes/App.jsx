@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/material";
-import { Outlet } from "@remix-run/react";
+import { Outlet, useLocation } from "@remix-run/react";
 
 import BottomNav from "../Components/Navigation/BottomNav";
 import NavBar from "../Components/Navigation/NavBar";

@@ -1,5 +1,5 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { blue, deepPurple, green, grey, purple } from "@mui/material/colors";
+import { deepPurple } from "@mui/material/colors";
 import {
   Links,
   LiveReload,
