@@ -1,5 +1,9 @@
 import { Fab, Fade, Stack, Zoom } from "@mui/material";
-import { useLoaderData, useNavigation } from "@remix-run/react";
+import {
+  useLoaderData,
+  useNavigation,
+  useSearchParams,
+} from "@remix-run/react";
 import { useContext, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
@@ -20,9 +24,33 @@ import { redirect } from "@remix-run/node";
 import BottomNav from "../../../Components/Navigation/BottomNav";
 import NavBar from "../../../Components/Navigation/NavBar";
 
-export const loader = async () => {
+const filterAndCategorize = (category, recipes) => {
+  const categorizedRecipes =
+    category === "All Recipes" || category === null
+      ? recipes
+      : recipes.filter((r) => r.category === category);
+  console.log("categorized", categorizedRecipes.length);
+
+  return categorizedRecipes;
+};
+
+export const loader = async ({ request }) => {
   const recipes = await getRecipes();
-  return recipes;
+  const url = new URL(request.url);
+  const params = new URLSearchParams(url.search);
+  const recipeList =
+    params.get("search") === null
+      ? recipes
+      : recipes.filter((r) =>
+          r.name.toLowerCase().includes(params.get("search").toLowerCase())
+        );
+
+  const categories =
+    recipes &&
+    [...new Set(recipes.map((item) => item.category))].filter(
+      (r) => r !== "All Recipes"
+    );
+  return { recipes, recipeList, categories };
 };
 
 export const action = async ({ request }) => {
@@ -37,34 +65,42 @@ const RecipeIndex = () => {
   const { open, handleClickOpen, handleCloseDialog } =
     useContext(AddRecipeContext);
 
-  const recipes = useLoaderData();
-  const categories =
-    recipes &&
-    [...new Set(recipes.map((item) => item.category))].filter(
-      (r) => r !== "All Recipes"
-    );
+  const { recipes, recipeList, categories } = useLoaderData();
+  const [searchParams, setSearchParams] = useSearchParams({
+    search: "",
+    category: "All Recipes",
+  });
+
   const navigation = useNavigation();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("search") || "");
   const [category, setCategory] = useState("All Recipes");
 
-  if (navigation.state === "loading") {
-    return <LoadingComponent />;
-  }
-
+  const loading =
+    navigation.state === "loading" &&
+    !navigation.location.pathname.includes("/app/recipes");
   return (
     <Fade appear in mountOnEnter unmountOnExit timeout={{ enter: 500 }}>
       <Stack spacing={1} sx={{ paddingTop: "4.5rem", paddingBottom: "7em" }}>
         <NavBar />
-        <SearchAndFilter
-          search={search}
-          setSearch={setSearch}
-          categories={categories}
-          category={category}
-          setCategory={setCategory}
-        />
-
-        {recipes && (
-          <RecipeFeed recipes={recipes} search={search} category={category} />
+        {!loading && (
+          <SearchAndFilter
+            search={search}
+            seatrchParams={searchParams}
+            setSearchParams={setSearchParams}
+            setSearch={setSearch}
+            categories={categories}
+            category={category}
+            setCategory={setCategory}
+          />
+        )}
+        {navigation.state === "loading" ? (
+          <LoadingComponent />
+        ) : (
+          <RecipeFeed
+            recipes={recipeList}
+            search={search}
+            category={category}
+          />
         )}
 
         <Zoom

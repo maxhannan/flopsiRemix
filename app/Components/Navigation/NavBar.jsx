@@ -17,7 +17,7 @@ import { useColorMode } from "../../utils/themeCtx";
 
 const NavBar = () => {
   const location = useLocation();
-  console.log(location, "LOC");
+
   const navigation = useNavigation();
   const getPage = (location) => {
     switch (location) {

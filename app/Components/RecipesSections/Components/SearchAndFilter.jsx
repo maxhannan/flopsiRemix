@@ -13,6 +13,8 @@ const SearchAndFilter = ({
   setCategory,
   category,
   categories,
+  setSearchParams,
+  searchParams,
 }) => {
   const handleChange = (event) => {
     setCategory(event.target.value);
@@ -20,6 +22,7 @@ const SearchAndFilter = ({
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
+    setSearchParams({ search: e.target.value });
   };
 
   return (

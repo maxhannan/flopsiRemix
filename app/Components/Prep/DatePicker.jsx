@@ -1,10 +1,14 @@
 import { MobileDatePicker } from "@mui/x-date-pickers";
+import { useState } from "react";
 
 const PrepDatePicker = ({ value, handleChange }) => {
   return (
     <MobileDatePicker
+      closeOnSelect
       value={value}
-      onChange={(newValue) => handleChange(newValue)}
+      onChange={(newValue) => {
+        handleChange(newValue);
+      }}
       slotProps={{
         textField: {
           sx: {

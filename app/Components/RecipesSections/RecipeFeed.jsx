@@ -1,21 +1,17 @@
 import { Slide, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import RecipeSummary from "./Components/RecipeSummary";
+const filterAndCategorize = (category, recipes) => {
+  const categorizedRecipes =
+    category === "All Recipes" || category === null
+      ? recipes
+      : recipes.filter((r) => r.category === category);
+  console.log("categorized", categorizedRecipes.length);
 
-const RecipeFeed = ({ recipes, search, category }) => {
-  const filterAndCategorize = (search, category) => {
-    const categorizedRecipes =
-      category === "All Recipes"
-        ? recipes
-        : recipes.filter((r) => r.category === category);
-    const filteredRecipes = categorizedRecipes.filter((r) =>
-      r.name.toLowerCase().includes(search.toLowerCase())
-    );
-    return filteredRecipes;
-  };
-
-  const recipeList = filterAndCategorize(search, category);
-
+  return categorizedRecipes;
+};
+const RecipeFeed = ({ recipes, category }) => {
+  const recipeList = filterAndCategorize(category, recipes);
   return (
     <Slide
       direction="up"

@@ -55,7 +55,7 @@ const PrepIndex = () => {
   const loading =
     navigation.state === "loading" &&
     !navigation.location.pathname.includes("/app/prep");
-  console.log(navigation.location);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Fade appear in mountOnEnter unmountOnExit timeout={{ enter: 500 }}>

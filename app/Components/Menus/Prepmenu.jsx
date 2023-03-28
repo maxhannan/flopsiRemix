@@ -71,7 +71,11 @@ export default function PrepMenu() {
               <Typography variant="body2" color="text.secondary"></Typography>
             </MenuItem>
 
-            <MenuItem component={Link} to="/app/prep/templatecreator">
+            <MenuItem
+              component={Link}
+              to="/app/prep/templatecreator"
+              onClick={() => setAnchorEl(null)}
+            >
               <ListItemIcon>
                 <MdEdit />
               </ListItemIcon>
