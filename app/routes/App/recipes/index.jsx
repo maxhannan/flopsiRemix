@@ -1,4 +1,4 @@
-import { Fab, Fade, Stack, Zoom } from "@mui/material";
+import { CircularProgress, Fab, Fade, Stack, Zoom } from "@mui/material";
 import {
   useLoaderData,
   useNavigation,
@@ -23,27 +23,33 @@ import { getUser } from "../../../utils/auth.server";
 import { redirect } from "@remix-run/node";
 import BottomNav from "../../../Components/Navigation/BottomNav";
 import NavBar from "../../../Components/Navigation/NavBar";
+import { Container } from "@mui/system";
 
-const filterAndCategorize = (category, recipes) => {
+const filterAndCategorize = (recipes, category, search) => {
   const categorizedRecipes =
     category === "All Recipes" || category === null
       ? recipes
       : recipes.filter((r) => r.category === category);
-  console.log("categorized", categorizedRecipes.length);
 
-  return categorizedRecipes;
+  const recipeList =
+    search === null
+      ? categorizedRecipes
+      : categorizedRecipes.filter((r) =>
+          r.name.toLowerCase().includes(search.toLowerCase())
+        );
+
+  return recipeList;
 };
 
 export const loader = async ({ request }) => {
   const recipes = await getRecipes();
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
-  const recipeList =
-    params.get("search") === null
-      ? recipes
-      : recipes.filter((r) =>
-          r.name.toLowerCase().includes(params.get("search").toLowerCase())
-        );
+  const recipeList = filterAndCategorize(
+    recipes,
+    params.get("category"),
+    params.get("search")
+  );
 
   const categories =
     recipes &&
@@ -66,14 +72,13 @@ const RecipeIndex = () => {
     useContext(AddRecipeContext);
 
   const { recipes, recipeList, categories } = useLoaderData();
-  const [searchParams, setSearchParams] = useSearchParams({
-    search: "",
-    category: "All Recipes",
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const navigation = useNavigation();
   const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [category, setCategory] = useState("All Recipes");
+  const [category, setCategory] = useState(
+    searchParams.get("category") || "All Recipes"
+  );
 
   const loading =
     navigation.state === "loading" &&
@@ -85,7 +90,7 @@ const RecipeIndex = () => {
         {!loading && (
           <SearchAndFilter
             search={search}
-            seatrchParams={searchParams}
+            searchParams={searchParams}
             setSearchParams={setSearchParams}
             setSearch={setSearch}
             categories={categories}
@@ -94,7 +99,14 @@ const RecipeIndex = () => {
           />
         )}
         {navigation.state === "loading" ? (
-          <LoadingComponent />
+          <Container
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress />
+          </Container>
         ) : (
           <RecipeFeed
             recipes={recipeList}

@@ -17,12 +17,16 @@ const SearchAndFilter = ({
   searchParams,
 }) => {
   const handleChange = (event) => {
+    searchParams.set("category", event.target.value);
+    setSearchParams(searchParams);
     setCategory(event.target.value);
   };
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
-    setSearchParams({ search: e.target.value });
+    searchParams.set("search", e.target.value);
+    console.log("SEARCH", searchParams);
+    setSearchParams(searchParams);
   };
 
   return (

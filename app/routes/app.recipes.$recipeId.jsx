@@ -105,8 +105,8 @@ const Recipe = () => {
     return <LoadingComponent />;
   }
   return (
-    <Container maxWidth="md">
-      <Slide appear in mountOnEnter unmountOnExit>
+    <Container>
+      <Slide appear in mountOnEnter unmountOnExit timeout={{ enter: 250 }}>
         <Box
           sx={{
             display: "flex",
