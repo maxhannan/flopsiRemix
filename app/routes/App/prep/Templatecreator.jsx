@@ -11,10 +11,6 @@ const TemplateCreator = () => {
   }
   return (
     <Container>
-      <Typography variant="h5" color="secondary">
-        Template Creator
-      </Typography>
-
       <TemplateForm />
     </Container>
   );

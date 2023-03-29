@@ -17,7 +17,6 @@ import {
   extractRecipe,
   getRecipes,
 } from "../../../utils/recipes.server";
-import LoadingComponent from "../../../Components/LoadingComponent";
 
 import { getUser } from "../../../utils/auth.server";
 import { redirect } from "@remix-run/node";
@@ -45,6 +44,7 @@ export const loader = async ({ request }) => {
   const recipes = await getRecipes();
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
+
   const recipeList = filterAndCategorize(
     recipes,
     params.get("category"),
@@ -56,6 +56,7 @@ export const loader = async ({ request }) => {
     [...new Set(recipes.map((item) => item.category))].filter(
       (r) => r !== "All Recipes"
     );
+
   return { recipes, recipeList, categories };
 };
 
@@ -80,14 +81,14 @@ const RecipeIndex = () => {
     searchParams.get("category") || "All Recipes"
   );
 
-  const loading =
+  const pageChangeLoading =
     navigation.state === "loading" &&
     !navigation.location.pathname.includes("/app/recipes");
   return (
     <Fade appear in mountOnEnter unmountOnExit timeout={{ enter: 500 }}>
       <Stack spacing={1} sx={{ paddingTop: "4.5rem", paddingBottom: "7em" }}>
         <NavBar />
-        {!loading && (
+        {!pageChangeLoading && (
           <SearchAndFilter
             search={search}
             searchParams={searchParams}
